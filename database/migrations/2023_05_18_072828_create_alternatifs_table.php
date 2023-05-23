@@ -32,7 +32,7 @@ return new class extends Migration
             $table->integer('kamar_tidur');
             $table->integer('kamar_mandi');
             $table->decimal('lebar_jalan');   
-            $table->string('gambar_rumah')->nullable();
+            $table->string('img_url')->nullable();
             $table->string('spesifikasi');  
             $table->timestamps(); 
         });
