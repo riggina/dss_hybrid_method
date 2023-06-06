@@ -1,14 +1,14 @@
 @extends('layouts.main')
 
 @section('container')
-<div class="container">
+<div class="container mt-3">
     <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">
           <div class="carousel-item active">
             <img src="img/banner.png" class="d-block w-100" alt="gambar">
           </div>
           <div class="carousel-item">
-            <img src="img/rumah.png" class="d-block w-100" alt="gambar">
+            <img src="img/banner.png" class="d-block w-100" alt="gambar">
           </div>
           <div class="carousel-item">
             <img src="img/banner.png" class="d-block w-100" alt="gambar">
@@ -24,20 +24,26 @@
         </button>
     </div>
     <br/>
-    <h6>Rekomendasi Rumah Tahun Ini</h6>
-    <div class="row">
-        <div class="col-md-3 col-sm-4 col-xs-4">
+    <div class="title-of">
+      Rekomendasi Rumah Tahun Ini
+    </div>
+    <div class="row gy-3">
+        <div class="col-lg-3 col-md-3 col-sm-4 col-xs-4">
             @include('partials/card')
         </div>
-        <div class="col-md-3 col-sm-4 col-xs-4">
+        <div class="col-lg-3 col-md-3 col-sm-4 col-xs-4">
             @include('partials/card')
         </div>
-        <div class="col-md-3 col-sm-4 col-xs-4">
+        <div class="col-lg-3 col-md-3 col-sm-4 col-xs-4">
             @include('partials/card')
         </div>
-        <div class="col-md-3 col-sm-4 col-xs-4">
+        <div class="col-lg-3 col-md-3 col-sm-4 col-xs-4">
             @include('partials/card')
         </div>
     </div>
 </div>
+@endsection
+
+@section('footer')
+  <p>&copy; 2023 Sistem Pendukung Keputusan Rekomendasi Rumah Tinggal Balikpapan. All rights reserved.</p>
 @endsection

@@ -2,16 +2,16 @@
 
 namespace App\Models;
 
-use App\Models\admin;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class alternatif extends Model
+class Alternatif extends Model
 {
     use HasFactory;
 
     protected $fillable = [
         'alternatif_name',
+        'slug',
         'alamat',
         'harga_rumah',
         'dp_rumah',
@@ -25,15 +25,24 @@ class alternatif extends Model
         'sertifikat_rumah',
         'daya_listrik',
         'luas_bangunan',
-        'luas_tanah',
+        'luas_~tanah',
         'tipe_rumah',
         'kamar_tidur',
         'kamar_mandi',
         'lebar_jalan',
         'img_url',
-        'spesifikasi',
-        'admin_id'
+        'available_status',
+        'published_at',
+        'latitude',
+        'longitude'
     ];
+
+    protected $guarded = ['id', 'timestamps'];
+
+    public function users() 
+    {
+        return $this->hasMany(User::class);
+    }
 
 }
  

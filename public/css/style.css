@@ -1,33 +1,687 @@
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+
+/* ==== Header  ==== */
+
+/* =====Search===== */
 .form-inputs{
     position:relative;
 }
-.form-inputs .form-control{
-    height:45px; 
+.form-inputs .form-control.search{
+    padding-left: 2.375rem;
+    height:45px;
+    border: 1.5px solid #FFA500 ;
+    border-radius: 30px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.8rem;
 }
 
-.form-inputs .form-control:focus{
+.form-inputs .form-control.search:focus{
     box-shadow:none;
-    border:1px solid #000;
+    border-color: none;
 }
 
-.form-inputs i{
-    position:absolute;
-    right:10px;
-    top:15px;
+.form-control-feedback {
+    position: absolute;
+    top:3px;
+    left: 3px;
+    z-index: 2;
+    display: block;
+    width: 2.375rem;
+    height: 2.375rem;
+    line-height: 2.375rem;
+    text-align: center;
+    pointer-events: none;
+    color: #FFA500;
 }
 
-.shop-bag{
-    background-color:#000;
-    color:#fff;
-    height:50px;
-    width:50px;
-    font-size:25px;
-    display:flex;
-    border-radius:50%;
-    align-items:center;
-    justify-content:center;
+/* ===== Filter ===== */
+
+.filter-button{
+    border: 1px;
+    width: 8rem;
+    height: 3rem;
+    background-color: #FFA500;
+    border-radius: 30px;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 500;
+    font-size: 0.9rem;
+    letter-spacing: 0.5px;
+    color: white;
 }
 
-.qty{
-    font-size:12px;
+.filter-button:hover{
+    border: 1px solid #FFA500;
+    color: #FFA500;
+}
+
+/* ===== Login ===== */
+.admin-button{
+    height: 3rem;
+    width: 3rem;
+    border-radius: 100px;
+    border: 1px solid #FFA500;
+    margin-left: 35px;
+}
+
+.admin-button i{
+    color: #FFA500;
+}
+
+.admin-button:hover{
+    border: 1px solid #FFA500;
+}
+
+/* ===== Home ===== */
+.title-of{
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: #434343;
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+    letter-spacing: 0.3px;
+}
+
+.card{
+    margin-bottom: 2rem;
+    padding: 0.6rem;
+    border: 1px solid #FFA500;
+    border-radius: 1.1rem;
+}
+
+.card img{
+    width: 16.7rem;
+    height: 17.7rem;
+    border-radius: 1rem;
+}
+
+.status {
+    position: absolute;
+    top: 20px;
+    left: 18px;
+    background-color: #82CD47;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 10px;
+    font-family: 'Montserrat';
+    font-size: 12px;
+}
+
+.text-card{
+    margin: 2px;
+    padding-top: 10px;
+    font-family: 'Inter';
+    font-size: 14px;
+}
+
+.text-card-price{
+    margin: 2px;
+    font-family: 'Inter';
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.text-card-wide{
+    margin: 2px;
+    font-family: 'Inter';
+    font-size: 12px;
+}
+
+.btn-more{
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    color: white;
+    background-color: #FFA500;
+    font-family: 'Montserrat';
+    font-size: 12px;
+}
+
+.btn-more:hover{
+    color: #FFA500;
+    border: 1px solid #FFA500;
+}
+
+/* ==== Footer ==== */
+.footer{
+    margin-top: auto;
+    padding: 15px;
+    bottom: 0;
+    width: 100%;
+    height: 50px;
+    background-color: #FFA500;
+    text-align: center;
+    font-family: 'Inter';
+    font-size: 14px;
+}
+
+/* ===== Detail Result ===== */
+.bi-chevron-compact-left{
+    width: 1rem;
+}
+
+.gambar-rumah{
+    width: 100%;
+    height: 40%;
+}
+
+.alternatif-name{
+    font-family: 'Inter';
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.harga-detail{
+    padding: 0.6rem;
+    background-color: #FFA500;
+    border-radius: 12px;
+    margin: 0;
+    font-family: 'Inter';
+    font-size: 1rem;
+    font-weight: 700;
+    color: #434343;
+    text-align: center;
+}
+
+.lt-detail{
+    padding: 0.6rem;
+    background-color: #FFA500;
+    border-radius: 12px;
+    margin: 0;
+    font-family: 'Inter';
+    font-size: 0.9rem;
+    color: #434343;
+    text-align: center;
+}
+
+.lb-detail{
+    padding: 0.6rem;
+    background-color: #FFA500;
+    border-radius: 12px;
+    margin: 0;
+    font-family: 'Inter';
+    font-size: 0.9rem;
+    color: #434343;
+    text-align: center;
+}
+
+.contact{
+    background-color: #82CD47;
+    border-radius: 0.8rem;
+}
+
+.contact:hover{
+    border: 1px solid #82CD47;
+    color: #82CD47;
+}
+
+.contact-prop{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    text-align: end;
+}
+
+.divider{
+    width: 100%;
+    height: 0.8px;
+    background-color: #434343;   
+}
+
+.text-detail{
+    margin: 0;
+    padding: 0;
+    text-align: justify;
+    font-family: 'Montserrat';
+}
+h5{
+    font-family: 'Montserrat';
+    font-size: 1.2rem;
+    font-weight: 900;
+}
+
+h6{
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+}
+
+.cvertical-divider{
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 69%;
+}
+
+.vertical-divider{
+    width: 1px;
+    height: 100%;
+    background-color: #434343;
+}
+
+/* ===== Modal Login ===== */
+.modal-header{
+    border-bottom: none;
+    padding: 12px 10px;
+}
+.modal-footer{
+    border-top: none;
+}
+
+.login-page{
+    text-align: center;
+}
+
+.login-page h6{
+    padding: 0;
+    margin: 0;
+    margin-bottom: 2px;
+    font-family: 'Nunito', sans-serif;
+    letter-spacing: 0.3px;
+}
+
+.login-page p{
+    margin: 0;
+    padding: 0;
+    margin-bottom: 10px;
+    font-family: 'Nunito', sans-serif;
+}
+
+.form-group:focus{
+    border: 1px solid #FFA500;
+}
+
+.password-container {
+    position: relative;
+  }
+
+.toggle-password {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+.form-control.login{
+    border: 1px solid #FFA500;
+    font-family: 'Nunito';
+    font-size: 14px;
+}
+
+.form-control.login:focus{
+    border: none;
+}
+
+.login-btn{
+    background-color: #FFA500;
+    padding: 0.3rem 2rem;
+    border-radius: 12px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 1rem;
+}
+
+.login-btn:hover{
+    background-color: #FFA500;
+}
+
+#map{
+    height: 250px;
+    background-color: #FFA500;
+}
+
+/* ==== Dashboard ==== */
+.dashboard{
+    position: relative;
+    left: 150px;
+    width: calc(100% - 300px);
+    transition: all 0.3s ease;
+}
+
+.foto-profile{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.sidebar.close ~ .dashboard{
+    left: 0;
+    
+}
+
+.add-data{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #FFA500;
+    color: #434343;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 500;
+}
+.add-data:hover{
+    background-color: #FFA500;
+}
+
+.add-data i{
+    margin-right: 5px;
+    font-size: 18px;
+}
+
+.data-post{
+    padding: 1rem;
+    border: 1px solid #FFA500;
+    border-radius: 1rem;
+}
+
+.edit-icon:hover{
+    background-color: #FFA500;
+    color: #F5F5F5;
+}
+
+.delete-icon:hover{
+    background-color: #FFA500;
+    color: #F5F5F5;
+}
+
+table{
+    border-collapse: collapse;
+    width: 100%;
+    background-color: #FAFAFA;
+    border-radius: 12px;
+}
+thead{
+    background-color: #FFA500;
+}
+
+thead th:first-child{   
+    border-top-left-radius: 10px;
+}
+
+thead th:last-child{   
+    border-top-right-radius: 10px;
+}
+
+tr:nth-child(even) {
+    background-color: #FFF6E9;
+  }
+
+th, td {
+    text-align: left;
+    padding: 8px;
+}
+.date{
+    text-align: center;
+}
+
+.btn-CUD{
+    text-align: right;
+}
+
+.dustbin{
+    width: 20%;
+}
+.body-modal{
+    text-align: center;
+}
+.body-modal-data{
+    text-align: center;
+    font-size: 0.9rem;
+    text-decoration: underline;
+    color: red;
+}
+.pagination a{
+    text-decoration: none;
+    color: #FFA500;
+}
+
+.pagination a:hover{
+    color: #434343;
+    background-color: #FFA500;
+}
+
+/* ===== Sidebar ====== */
+.sidebar{
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 250px;
+    padding: 10px 14px;
+    background: #FFF;
+    box-shadow: 1px 0 5px -2px #888;
+    transition: all 0.3s ease;
+    z-index: 100;
+}
+.sidebar.close{
+    width: 78px;   
+}
+
+
+.sidebar .text{
+    font-size: 1rem;
+    font-weight: 500;
+    font-family: 'Nunito', sans-serif;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+    opacity: 1;
+}
+
+.sidebar.close .text{
+    opacity: 0;;
+}
+
+.sidebar .image-sidebar{
+    min-width: 30px;
+    display: flex;
+    align-items: center;
+}
+
+.sidebar ul{
+    padding: 0;
+    margin: 0;
+    margin-top: 30px;
+}
+
+.sidebar li{
+    height: 50px;
+    margin-top: 10px;
+    list-style: none;
+    display: flex;
+    align-items: center;
+}
+
+.sidebar li .icon{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width:  50px;
+    font-size: 20px;
+}
+
+.sidebar li .icon,
+.sidebar li .text{
+    color: #858585;
+    transition: all 0.2s ease;
+}
+
+.sidebar header{
+    position: relative;
+    margin-top: 10px;
+}
+
+.sidebar .image-text img{
+    width: 40px;
+    border-radius: 6px;   
+}
+
+.sidebar header .image-text{
+  display: flex;
+  align-items: center;  
+}
+
+header .image-text .header-text{
+    display: flex;
+    flex-direction: column;
+}
+
+.header-text .nameydh{
+    margin-top: 5px;
+    margin-left: 10px;
+    font-weight: 600;
+}
+
+.sidebar header .toggle{
+    position: absolute;
+    top: 100%;
+    right: -30px;
+    transform: translateY(-50%) rotate(180deg);
+    height: 35px;
+    width: 35px;
+    background-color: #FFA500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    color: #FFF;
+    font-size: 20px;
+    transition: all 0.5s ease;
+}
+
+.sidebar.close header .toggle{
+    transform: translateY(-50%);
+    transition: all 0.5s ease;
+}
+
+
+.sidebar li a{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    border-radius: 6px;
+    transition: all 0.4s ease;
+}
+
+.sidebar li a:hover{
+    background-color: #FFA500;
+}
+
+.sidebar li a:hover .icon,
+.sidebar li a:hover .text{
+    color: #FFF;
+}
+
+.sidebar .menu-bar{
+    height: calc(100% - 120px);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+/* ==== Modal Add Data ==== */
+
+.title-modal h4{
+    margin-top: 1rem;
+    margin-left: 1rem;
+}
+
+.title-modal span{
+    margin-left: 1rem;
+    font-size: 16px;
+    font-family: 'Nunito';
+}
+
+.dash{
+    margin: 0;
+    padding: 1rem;
+    border: 1px dashed #434343;
+    border-radius: 8px;
+}
+
+.preview-foto{
+    background-color: #F5F5F5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    border-radius: 8px;
+}
+
+.post-foto p{
+    margin: 0;
+    padding: 0;
+    margin-bottom: 0.3rem;
+    font-family: 'Nunito', sans-serif;
+    font-size: 14px;
+}
+
+.post-foto .form-control{
+    background-color: #FFA500;
+    font-size: 14px;
+    font-family: 'Nunito', sans-serif;
+}
+
+.form-label.title{
+    font-family: 'Nunito', sans-serif;
+    font-size: 14px;
+}
+
+.form-control.place-date{
+    border: 1px solid #85858540;
+    font-family: 'Nunito', sans-serif;
+}
+
+.form-select option{
+    font-family: 'Nunito',sans-serif;
+    font-size: 14px;
+}
+
+.form-control.place-date:focus,
+.form-select:focus{
+    box-shadow:none;
+    border-color: none;
+}
+
+.btn-submit{
+    background-color: #FFA500;
+    border: none;
+    color: white;
+    font-family: 'Nunito',sans-serif;
+}
+
+.btn-submit:hover{
+    border-color: none;
+    background-color: #FFA500;
+}
+
+.btn.dropup{
+    text-align: start;
+    border: 1px solid #85858550;
+}
+
+.btn-group>.btn:not(:last-child):not(.dropdown-toggle) {
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
+}
+
+.scrollable-menu {
+    height: auto;
+    max-height: 200px;
+    overflow-x: hidden;
+}
+
+.breadcrumb{
+    font-family: 'Nunito', sans-serif;
+}
+
+.breadcrumb a{
+    color: #FFA500;
 }
