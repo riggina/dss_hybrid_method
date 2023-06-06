@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('alternatifs', function (Blueprint $table) {
             $table->id();
             $table->string('alternatif_name');
-            $table->string('alamat');
+            $table->text('alamat');
             $table->decimal('harga_rumah');
             $table->decimal('dp_rumah');
             $table->decimal('cicilan_rumah');
@@ -31,9 +31,12 @@ return new class extends Migration
             $table->integer('tipe_rumah');
             $table->integer('kamar_tidur');
             $table->integer('kamar_mandi');
-            $table->decimal('lebar_jalan');   
+            $table->decimal('lebar_jalan');
+            $table->boolean('available_status');
             $table->string('img_url')->nullable();
-            $table->string('spesifikasi');  
+            $table->timestamp('published_at')->nullable();
+            $table->double('latitude', 10, 8);
+            $table->double('longitude', 11, 8);
             $table->timestamps(); 
         });
     }
