@@ -124,19 +124,6 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-12">
-                        <label for="exampleFormControlInput25" class="form-label title">Kecamatan</label>
-                        <select class="form-select" id="exampleFormControlInput25" aria-label="Default select example">
-                            <option value="6">Balikpapan Selatan</option>
-                            <option value="7">Balikpapan Utara</option>
-                            <option value="9">Balikpapan Timur</option>
-                            <option value="8">Balikpapan Barat</option>
-                            <option value="8">Balikpapan Tengah</option>
-                            <option value="8">Balikpapan Kota</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="row">
                     <div class="col-6 my-2">
                         <label for="exampleFormControlInput22" class="form-label title">Kamar Tidur</label>
                         <select class="form-select" id="exampleFormControlInput5" aria-label="Default select example">
