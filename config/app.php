@@ -109,7 +109,7 @@ return [
     |
     */
 
-    'faker_locale' => 'en_US',
+    'faker_locale' => env('FAKER_LOCALE','en_US'),
 
     /*
     |--------------------------------------------------------------------------
@@ -141,7 +141,7 @@ return [
 
     'maintenance' => [
         'driver' => 'file',
-        // 'store'  => 'redis',
+        'store'  => 'redis',
     ],
 
     /*
@@ -165,10 +165,9 @@ return [
          */
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
-        // App\Providers\BroadcastServiceProvider::class,
+        App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-        Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
     ])->toArray(),
 
     /*
@@ -183,9 +182,9 @@ return [
     */
 
     'aliases' => Facade::defaultAliases()->merge([
-        'JWTAuth' =>Tymon\JWTAuth\Facade\JWTAuth::class,
-        'JWTAuthFactory' =>Tymon\JWTAuth\Facade\JWTAuthFactory::class,
-        // 'Example' => App\Facades\Example::class,
+        // 'JWTAuth' =>Tymon\JWTAuth\Facade\JWTAuth::class,
+        // 'JWTAuthFactory' =>Tymon\JWTAuth\Facade\JWTAuthFactory::class,
+        'Example' => App\Facades\Example::class,
     ])->toArray(),
 
 ];

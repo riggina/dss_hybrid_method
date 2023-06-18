@@ -62,3 +62,8 @@
     </div>
     
 @endsection
+
+@php
+    $showHeader = false;
+    $showFooter = false;
+@endphp

@@ -2,7 +2,7 @@
     <header>
         <div class="image-text">
             <span class="image-sidebar">
-                <img src="img/Logo2.png" alt="house">
+                <img src="{{ asset('img/Logo2.png') }}" alt="house">
             </span>
             <div class="text header-text">
                 <span class="nameydh">Your Dream House</span>
@@ -15,8 +15,8 @@
     <div class="menu-bar">
         <div class="menu">
             <ul class="menu-links">
-                <li class="nav-link">
-                    <a href="#">
+                <li class="nav-link {{ request()->is('dashboard*') ? 'active' : '' }}">
+                    <a href='dashboard'>
                         <i class='bx bx-home-alt icon'></i>
                         <span class="text nav-text">Dashboard</span>
                     </a>
@@ -31,11 +31,14 @@
         </div>
     </div>
     <div class="bottom-content">
-        <li class="">
-            <a href="#">
-                <i class="bx bx-log-out icon"></i>
-                <span class="text nav-text">Keluar</span>
-            </a>
+        <li>
+            <form action="/logout" method="POST">
+                @csrf
+                <button type="submit" class="dropdown-item">
+                    <i class="bx bx-log-out icon"></i>
+                    <span class="text nav-text">Keluar</span>
+                </button>
+            </form>
         </li>
     </div>
 </nav>
