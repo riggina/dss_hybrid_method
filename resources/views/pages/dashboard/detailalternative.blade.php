@@ -4,7 +4,7 @@
 @include('partials/sidebars')
 <div class="container">
     <div class="row my-5">
-        <img  style="height:200px" src={{ $alternative->img_url }}>
+        {{-- <img  style="height:200px" src={{ $alternative->img_url }}> --}}
     </div>
     <div class="row">
         <div class="row my-3">
@@ -12,9 +12,12 @@
                 <div class="col-md-12">
                     <h5>Detail Rumah</h5>
                 </div>
+                <div class="col-md-12">
+                    {{-- <h5>{{ $user->user_id}}</h5> --}}
+                </div>
                 <br/>
                 <div class="row">
-                    <div class="col-md-6">
+                    {{-- <div class="col-md-6">
                         <h6>Alamat</h6>
                     </div>
                     <div class="col-md-6 text-detail">
@@ -79,7 +82,7 @@
                     </div>
                     <div class="col-md-6 text-detail">
                         <p>{{ $alternative->available_status }}</p>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
             <div class="col-md-6">

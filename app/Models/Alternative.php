@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use App\Models\User;
 
 class Alternative extends Model
 {
@@ -15,29 +17,35 @@ class Alternative extends Model
 
     protected $fillable = [
         'alternative_name',
+        'user_id',
         'slug',
         'alamat',
+        'contact',
         'img_url',
         'available_status',
         'latitude',
         'longitude',
-        'harga_rumah',
-        'dp_rumah',
-        'cicilan_rumah',
-        'jarak_pinggir_kota',
-        'jarak_pusat_kota',
-        'jarak_jalan_raya',
-        'jarak_pusat_perbelanjaan',
-        'jarak_tempat_hiburan',
-        'jarak_sekolah',
-        'sertifikat_rumah',
-        'daya_listrik',
-        'luas_bangunan',
-        'luas_tanah',
-        'tipe_rumah',
-        'kamar_tidur',
-        'kamar_mandi',
-        'lebar_jalan'
+        'tenor_tahun_cicilan',
+        'C1',
+        'C2',
+        'C3',
+        'C4',
+        'C5',
+        'C6',
+        'C7',
+        'C8',
+        'C9',
+        'C10',
+        'C11',
+        'C12',
+        'C13',
+        'C14',
+        'C15',
+        'C16',
+        'C17',
+        'C18',
+        'C19',
+        'C20',
     ];
     
     protected $guarded = ['id', 'timestamps'];
@@ -50,9 +58,9 @@ class Alternative extends Model
         }); 
     }
 
-    public function setTitleAttribute($alternative_name){
-        $this->alternative_name = $alternative_name;
-        $this->attributes['slug'] = str_slug($this->alternative_name , "-");
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
     }
 
     public static function getAlternative($id)
