@@ -7,7 +7,7 @@ use App\Models\Alternative;
 
 class NormalizationController extends Controller
 {
-    public function normalize()
+    public function weighted()
     {
         $alternatives = Alternative::all();
         $costs = ['C1', 'C2', 'C3', 'C4', 'C5', 'C6', 'C7', 'C8', 'C9', 'C10', 'C11', 'C12'];
@@ -42,8 +42,6 @@ class NormalizationController extends Controller
             }
             $allData[] = $alternative;
         }
-
-        // dd($allData);
 
         //Standard Deviasi
 
@@ -103,7 +101,7 @@ class NormalizationController extends Controller
             $W[] = $Cj[$i] / $sumCj;
         }
 
-        dd($W);
+        return $W;
 
     }
    
@@ -169,8 +167,82 @@ class NormalizationController extends Controller
         return $correlation;
     }
 
-    // public function indexCoefficientCorrelation($array, $integer) {
-    //     foreach 
-    // }
+    public function hybrid() {
+
+        ///Tahapan COPRAS-ARAS
+        $alternatives = Alternative::all();
+        $costs = ['C1', 'C2', 'C3', 'C4', 'C5', 'C6', 'C7', 'C8', 'C9', 'C10', 'C11', 'C12'];
+        $benefits = ['C13', 'C14', 'C15', 'C16', 'C17', 'C18', 'C19','C20'];
+        $criterias = ['C1','C2','C3','C4','C5','C6','C7', 'C8', 'C9', 'C10', 'C11', 'C12', 'C13', 'C14', 'C15', 'C16', 'C17', 'C18', 'C19', 'C20' ];
+
+        $sumArray = array_fill(0, count($costs), 0);
+
+        // Menghitung penjumlahan vertikal
+        foreach ($alternatives as $alternative) {
+            for ($i = 0; $i < count($costs); $i++) {
+                $cost = $costs[$i];
+                $sumArray[$i] += $alternative->$cost;
+            }
+            for ($i = 0; $i < count($benefits); $i++) {
+                $benefit = $benefits[$i];
+                $sumArray[$i] += $alternative->$benefit;
+
+            }
+        }
+
+        $Normalization = [];
+        foreach ($alternatives as $alternative) {
+            $dividedValues = [];
+            for ($i = 0; $i < count($costs); $i++) {
+                $cost = $costs[$i];
+                $dividedValues[] = $alternative->$cost / $sumArray[$i];
+            }
+            for ($i = 0; $i < count($benefits); $i++) {
+                $benefit = ($benefits[$i]);
+                $dividedValues[] =  $alternative->$benefit / $sumArray[$i];
+            }
+            $Normalization[] = $dividedValues;
+        }
+        
+        $W = $this->weighted();
+
+        $WeightedMatrix = [];
+
+        for ($i = 0; $i < count($Normalization); $i++) {
+            $row = $Normalization[$i];
+            $rowresult = [];
+
+            for ($j = 0; $j < count($row); $j++) {
+                $result = $row[$j] * $W[$j];
+                $rowresult[] = $result;
+            }
+
+            $WeightedMatrix[] = $rowresult;
+
+        }
+
+        dd($WeightedMatrix);
+
+
+
+        // foreach ($costs as $cost) {
+        //     $sum[$cost] += $alternatives->$cost;
+        // }
+
+        // foreach($benefits as $benefit) {
+        //     $sum[$benefit] = 0;
+        // }
+
+        // foreach( $alternatives as $alternative) {
+        //     foreach($costs as $cost) {
+        //         $alternative->$cost = $alternative->$cost / $sum[$cost];
+        //     }
+        //     // foreach($benefits as $benefit) {
+        //     //     $sum[$benefit] += $alternative->$benefit;
+        //     // }
+        // }
+
+        // dd($dividedArray);
+    }
 
 }

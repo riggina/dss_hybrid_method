@@ -37,7 +37,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('/dashboard', AlternativeController::class);
     Route::put('/dashboard/{alternative}',[AlternativeController::class, 'update'])->name('alternative.update');
     Route::get('/dashboard/checkSlug', [AlternativeController::class, 'checkSlug'])->name('alternative_slug');
-    Route::get('/ranking', [NormalizationController::class, 'normalize']);
+    Route::get('/ranking', [NormalizationController::class, 'hybrid']);
 });
 
 
