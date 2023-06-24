@@ -1,8 +1,14 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Models\Alternatif;
-use App\Http\Controllers\AlternatifController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\AlternativeController;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Auth\LogoutController;
+use App\Http\Controllers\Auth\ProfileController;
+use App\Http\Controllers\NormalizationController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -14,14 +20,36 @@ use App\Http\Controllers\AlternatifController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-Route::view('/', 'pages/home');
-Route::view('/result', 'pages/result');
-Route::view('/idresult', 'pages/detailresult');
-Route::view('/dashboard', 'pages/dashboard');
-Route::view('/peringkat', 'pages/ranking');
-// Route::get('/idresult', [AlternatifController::class, 'index']);
-// Route::get('/', [AlternatifController::class, 'index']);
-// Route::get('/{alternatif:slug}', [AlternatifController::class, 'show']);
+Route::get('/', [HomeController::class, 'index']);
+Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
+
+Route::middleware('guest')->group(function () {
+    Route::post('login', [LoginController::class, 'authenticate'])->name('login.post');
+});
+
+Route::post('register', [RegisterController::class, 'register'])->name('register.post');
+
+Route::middleware('auth')->group(function () {
+    Route::get('register', [RegisterController::class, 'showRegisterForm']);
+    Route::get('profile', [ProfileController::class, 'profile']);
+    // Route::get('dashboard', [AlternativeController::class, 'index']);
+    Route::post('logout', [LogoutController::class, 'logout']);
+    Route::resource('/dashboard', AlternativeController::class);
+    Route::put('/dashboard/{alternative}',[AlternativeController::class, 'update'])->name('alternative.update');
+    Route::get('/dashboard/checkSlug', [AlternativeController::class, 'checkSlug'])->name('alternative_slug');
+    Route::get('/ranking', [NormalizationController::class, 'hybrid']);
+});
+
+
+
+// Route::get('/alternative', [AlternativeController::class, 'index']);
+// Route::get('/alternative/{alternative}', [AlternativeController::class, 'show']);
+
+
+// Route::group(['middleware'=>'is_admin', 'prefix'=>'admin'], function (){
+//     Route::get('/dashboard', [AlternatifController::class, index])->name('dashboard');
+//     Route::get('/ranking', [AlternatifController::class, ranking])->name('ranking');
+// });
 
 
 
