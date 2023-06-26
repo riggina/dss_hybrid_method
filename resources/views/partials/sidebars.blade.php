@@ -21,15 +21,15 @@
                         <span class="text nav-text">Dashboard</span>
                     </a>
                 </li>
-                <li class="nav-link">
-                    <a href="#">
+                <li class="nav-link {{ request()->is('ranking*') ? 'active' : '' }}">
+                    <a href="/ranking">
                         <i class="bi bi-bar-chart-line icon"></i>
                         <span class="text nav-text">Peringkat</span>
                     </a>
                 </li>
             </ul>
         </div>
-    </div>
+    </div> 
     <div class="bottom-content">
         <li>
             <form action="/logout" method="POST">

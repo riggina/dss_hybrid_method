@@ -8,34 +8,46 @@
                 <h4>Peringkat</h4>
             </div>
             <div class="col-md-6 col-sm-6 d-flex justify-content-end">
-                <a href="#">
-                    <img src="img/foto.jpg" class="foto-profile" alt="..."/>
-                </a>
-            </div>  
+                @if (auth()->check())
+                    <nav class="navbar navbar-expand-sm">
+                        <ul class="navbar-nav">
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    {{ auth()->user()->name }}
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                  <li><a class="dropdown-item" href="/register">Create New Admin</a></li>
+                                </ul>
+                              </li>   
+                        </ul>
+                    </nav>
+                @endif
+            </div>   
         </div>
         <div class="col-md-12">
             <table>
                 <thead>
                     <tr>
-                        <th  class="date">Peringkat</th>
-                        <th  class="date">Nama Alternatif</th>
+                        <th class="date">Rank</th>
                         <th  class="date">Skor Akhir Perhitungan</th>
+                        <th  class="date">Nama Alternatif</th>
+                        <th  class="date">Alamat</th>
                         <th  class="date">Created Date</th>
                     </tr> 
                 </thead>
                 <tbody>
-                    <tr>
-                        <td  class="date">1</td>
-                        <td  class="date">12 Mei 2020</td>
-                        <td  class="date">1.00</td>
-                        <td  class="date">12:30:00 1 Mei 2022</td>
+                    @php
+                        $counter = 1;
+                    @endphp
+                    @foreach($items as $key => $item)
+                    <tr> 
+                        <td class="date">{{ $counter++ }}</td>
+                        <td  class="date">{{ $item['score'] }}</td>
+                        <td  class="date">{{ $item['alternative_name']}}</td>
+                        <td  class="date">{{ $item['alamat']}}</td>
+                        <td  class="date">{{ \Carbon\Carbon::parse($item['created_at'])->format('Y-m-d') }}</td>
                     </tr>
-                    <tr>
-                        <td  class="date">2</td>
-                        <td  class="date">12 Mei 2020</td>
-                        <td  class="date">1.00</td>
-                        <td  class="date">12:30:00 1 Mei 2022</td>
-                    </tr>
+                    @endforeach
                 </tbody>
             </table>
         </div>
