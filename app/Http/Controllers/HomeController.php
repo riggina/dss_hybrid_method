@@ -17,6 +17,12 @@ class HomeController extends Controller
         ]);
     }
 
+    public function search()
+    {
+        return view('pages.result', [
+            "alternatives" => Alternative::latest()->filter(request(['search']))->get()
+        ]);
+    }
     /**
      * Show the form for creating a new resource.
      */
@@ -36,9 +42,12 @@ class HomeController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($id)
     {
-        //
+        $alternatives = Alternative::find($id);
+        return view('pages.detailresult', [
+            "alternative" => $alternatives
+        ]);  
     }
 
     /**

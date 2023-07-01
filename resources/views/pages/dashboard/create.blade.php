@@ -27,61 +27,69 @@
         </div>  
     </div>
     <div>
-        <form action="/dashboard" method="POST">
+        <form action="/dashboard" method="POST"  enctype="multipart/form-data">
             @csrf
                 <div class="container">
                         <div class="row">
                             <div class="col-md-4 ">
-                                {{-- <div class="row dash">
+                                <div class="row dash">
                                     <div class="col-md-3 preview-foto">
-                                        <i class='bx bxs-image'></i>
+                                        <img class="preview-foto" id="preview" src="" alt="...">
                                     </div>
                                     <div class="form-group col-md-9 post-foto">
                                         <p>Unggah gambar rumah. Ukuran max 2MB</p>
-                                        <input class="form-control form-control-sm" id="rumah" type="file" required>
+                                        <input class="form-control form-control-sm" id="image" name="img_url" type="file" required>
                                     </div>
-                                </div> --}}
-                                <div class="form-group my-2">
-                                    <label class="form-label title">Nama Rumah</label>
-                                    <input id="alternative_name" type="text" name="alternative_name" class="form-control place-date" placeholder="Rumah Perumahan...." required>
                                 </div>
                                 <div class="form-group my-2">
-                                    <label class="form-label title">Slug</label>
-                                    <input id="slug" type="text" name="slug" class="form-control place-date" placeholder="slug">
+                                    <label class="form-label title">Nama Rumah</label>
+                                    <input id="alternative_name" type="name" name="alternative_name" class="form-control place-date" placeholder="Rumah Perumahan...." required>
                                 </div>
                                 <div class="form-group mb-2">
                                     <label class="form-label title">Alamat</label>
-                                    <textarea name="alamat" type="address" class="form-control place-date" rows="3" placeholder="Jalan..."></textarea>
+                                    <input name="alamat" type="address" class="form-control place-date" rows="3" placeholder="Jalan..." required>
+                                </div>
+                                <div class="form-group my-2">
+                                    <label class="form-label title">Narahubung</label>
+                                    <input id="contact" type="name" name="contact" class="form-control place-date" placeholder="08xxxxxxxxxx" required>
                                 </div>
                                 <div class="form-group mb-2">
                                     <label class="form-label title">Harga Rumah</label>
-                                    <input name="harga_rumah" class="form-control place-date" placeholder="Rp....">
+                                    <input name="C1" class="form-control place-date" placeholder="Rp. " required>
                                 </div>
                                 <div class="form-group mb-2">
                                     <label class="form-label title">DP Rumah</label>
-                                    <input name="dp_rumah" class="form-control place-date" placeholder="%">
+                                    <input name="C2" class="form-control place-date" placeholder="Rp. " required>
+                                </div>
+                                <div class="form-group mb-2">
+                                    <label class="form-label title">Uang Tanda Jadi</label>
+                                    <input name="C3" class="form-control place-date" placeholder="Rp." required>
                                 </div>
                                 <div class="mb-2">
-                                    <label class="form-label title">Cicilan Rumah</label>
-                                    <select name="cicilan_rumah" class="form-select" aria-label="Default select example">
+                                    <label class="form-label title">Tenor Tahun Cicilan Rumah</label>
+                                    <select name="tenor_tahun_cicilan" class="form-select" aria-label="Default select example" required>
                                         <option value="5">5 Tahun</option>
                                         <option value="10">10 Tahun</option>
                                         <option value="20">20 Tahun</option>
                                     </select>
                                 </div>
+                                <div class="form-group mb-2">
+                                    <label class="form-label title">Cicilan Rumah</label>
+                                    <input name="C4" class="form-control place-date" placeholder="Rp." required>
+                                </div>
                             </div>
                             <div class="col-md-4">
                                     <div class="form-group my-2">
                                         <label class="form-label title">Luas Bangunan</label>
-                                        <input name="luas_bangunan" class="form-control place-date" placeholder="m²"> 
+                                        <input name="C15" class="form-control place-date" placeholder="m²" required> 
                                     </div>
                                     <div class="form-group mb-2">
                                         <label class="form-label title">Luas Tanah</label>
-                                        <input name="luas_tanah" class="form-control place-date" placeholder="m²"> 
+                                        <input name="C16" class="form-control place-date" placeholder="m²" required> 
                                     </div>
                                     <div class="form-group my-2">
                                         <label class="form-label title">Sertifikat Rumah</label>
-                                        <select name="sertifikat_rumah" class="form-select" aria-label="Default select example">
+                                        <select name="C13" class="form-select" aria-label="Default select example" required>
                                             <option value="4">SHM</option>
                                             <option value="3">SHGB</option>
                                             <option value="2">AJB</option>
@@ -90,58 +98,66 @@
                                     </div>
                                     <div class="form-group mb-2">
                                         <label class="form-label title">Daya Listrik</label>
-                                        <input name="daya_listrik" class="form-control place-date" placeholder="Watt"> 
+                                        <input name="C14" class="form-control place-date" placeholder="Watt" required> 
                                     </div>
                                     <div class="form-group mb-2">
                                         <label class="form-label title">Tipe Rumah</label>
-                                        <input name="tipe_rumah" type="number" class="form-control place-date" placeholder="Tipe Rumah"> 
+                                        <input name="C17" type="number" class="form-control place-date" placeholder="Tipe Rumah" required> 
                                     </div>
                                     <div class="form-group mb-2">
                                         <label class="form-label title">Kamar Tidur</label>
-                                        <input name="kamar_tidur" type="number" class="form-control place-date" placeholder="Jumlah Kamar Tidur"> 
+                                        <input name="C18" type="number" class="form-control place-date" placeholder="Jumlah Kamar Tidur" required> 
                                     </div>
                                     <div class="form-group mb-2">
                                         <label class="form-label title">Kamar Mandi</label>
-                                        <input name="kamar_mandi" type="number" class="form-control place-date" placeholder="Jumlah Kamar Mandi"> 
+                                        <input name="C19" type="number" class="form-control place-date" placeholder="Jumlah Kamar Mandi" required> 
                                     </div>
                                     <div class="form-group">
                                         <label class="form-label title">Lebar Jalan</label>
-                                        <input name="lebar_jalan" class="form-control place-date" placeholder="m²"> 
+                                        <input name="C20" class="form-control place-date" placeholder="m²" required> 
                                     </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group my-2">
                                     <label class="form-label title">Jarak ke Pinggir Kota</label>
-                                    <input name="jarak_pinggir_kota" class="form-control place-date" placeholder="m²"> 
+                                    <input name="C5" class="form-control place-date" placeholder="m²" required> 
                                 </div>
                                 <div class="form-group my-2">
                                     <label  class="form-label title">Jarak ke Pusat Kota</label>
-                                    <input name="jarak_pusat_kota" class="form-control place-date" placeholder="m²"> 
+                                    <input name="C6" class="form-control place-date" placeholder="m²" required> 
                                 </div>
                                 <div class="form-group my-2">
                                     <label class="form-label title">Jarak ke Jalan Raya</label>
-                                    <input name="jarak_jalan_raya" class="form-control place-date" placeholder="m²"> 
+                                    <input name="C7" class="form-control place-date" placeholder="m²" required> 
                                 </div>
                                 <div class="form-group my-2">
                                     <label class="form-label title">Jarak ke Pusat Perbelanjaan</label>
-                                    <input name="jarak_pusat_perbelanjaan" class="form-control place-date" placeholder="m²"> 
+                                    <input name="C8" class="form-control place-date" placeholder="m²" required> 
                                 </div>
                                 <div class="form-group my-2">
                                     <label class="form-label title">Jarak ke Tempat Hiburan</label>
-                                    <input name="jarak_tempat_hiburan" class="form-control place-date" placeholder="m²"> 
+                                    <input name="C9" class="form-control place-date" placeholder="m²" required> 
                                 </div>
                                 <div class="form-group my-2">
                                     <label class="form-label title">Jarak ke Sekolah</label>
-                                    <input name="jarak_sekolah" class="form-control place-date" placeholder="m²"> 
+                                    <input name="C10" class="form-control place-date" placeholder="m²" required> 
+                                </div>
+                                <div class="form-group my-2">
+                                    <label class="form-label title">Jarak ke Bandara</label>
+                                    <input name="C11" class="form-control place-date" placeholder="m²" required> 
+                                </div>
+                                <div class="form-group my-2">
+                                    <label class="form-label title">Kemiringan Tanah</label>
+                                    <input name="C12" class="form-control place-date" placeholder="m²" required> 
                                 </div>
                                 <div class="form-group my-2">
                                     <label class="form-label title">Jumlah Ketersediaan Unit</label>
-                                    <input name="available_status" type="number" class="form-control place-date" placeholder="Jumlah Ketersediaan Unit"> 
+                                    <input name="available_status" type="number" class="form-control place-date" placeholder="Jumlah Ketersediaan Unit" required> 
                                 </div>
                                 <div class="form-group mb-2">
                                     <label class="form-label title">Koordinat Lokasi Unit</label>
-                                    <input name="longitude" class="form-control place-date mb-2" placeholder="longitude">
-                                    <input name="latitude" class="form-control place-date" placeholder="latitude">  
+                                    <input name="longitude" class="form-control place-date mb-2" placeholder="longitude" required>
+                                    <input name="latitude" class="form-control place-date" placeholder="latitude" required> 
                                 </div>
                                 <div class="my-5 d-flex justify-content-end">
                                     <a href="/dashboard" class="btn px-5">Batalkan</a>
@@ -149,32 +165,24 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
                 </div>
         </form>
     </div> 
 </div>
 <script>
-    $("#alternative_name").change(function () {
-        $.ajax({
-            url: '{{ route("alternative_slug") }}',
-            type: 'get',
-            data: {alternative_name: $(this).val()},
-            dataType: 'json',
-            success: function(response) {
-                $('#slug').val(response.slug);
-            }
-        });
-    })
-    // const alternative_name = document.querySelector('#alternative_name');
-    // const slug = document.querySelector('#slug');
+    const imageInput = document.querySelector('#image');
+    const previewImage = document.querySelector('#preview');
 
-    // alternative_name.addEventListener('change', function() {
-    //     fetch('/dashboard/checkSlug?alternative_name=' + alternative_name.value)
-    //     .then(response => response.json())
-    //     .then(data => slug.value = data.slug)
-        
-    // });
+    imageInput.addEventListener('change', function() {
+
+        const file = imageInput.files[0];
+        const reader = new FileReader();
+    
+        reader.onload = function(e) {
+            previewImage.src = e.target.result;
+        }
+        reader.readAsDataURL(file);
+    });
 </script>
 @endsection
 

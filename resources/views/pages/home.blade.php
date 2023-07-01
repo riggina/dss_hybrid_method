@@ -24,9 +24,15 @@
         </button>
     </div>
     <br/>
-    <div class="title-of">
-      Rekomendasi Rumah Tahun Ini
+    <div class="row d-flex">
+      <div class="col title-of">
+        Rekomendasi Rumah Paling Baru
+      </div>
+      <div class="col d-flex align-items-end justify-content-end mb-2">
+        <a href="/dariperingkat">Lihat rumah berdasarkan peringkat</a>
+      </div>
     </div>
+    
     <div class="row gy-3">
       @include('partials/card')
     </div>

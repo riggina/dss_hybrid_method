@@ -7,6 +7,8 @@
             </div>
             <div class="offcanvas-body">
                 <div class="container">
+                    <form action="{{ route('filterByLuasBangunan') }}" method="POST">
+                        @csrf
                     <div class="row gx-1">
                         <div class="my-2">
                             <label for="exampleFormControlInput22" class="form-label title">Harga Rumah</label>
@@ -92,7 +94,7 @@
                     <div class="row">
                         <div class="col-6">
                             <label for="exampleFormControlInput22" class="form-label title">Luas Bangunan</label>
-                            <select class="form-select" id="exampleFormControlInput5" aria-label="Default select example">
+                            <select class="form-select" name="C15" id="exampleFormControlInput5" aria-label="Default select example">
                                 <option value="1">36m² - 45m²</option>
                                 <option value="2">54m² - 60m²</option>
                                 <option value="3">70m² - 90m²</option>
@@ -102,24 +104,24 @@
                         </div>
                         <div class="col-6">
                             <label for="exampleFormControlInput23" class="form-label title">Luas Tanah</label>
-                            <select class="form-select" id="exampleFormControlInput23" aria-label="Default select example">
-                                <option value="6">60m² - 89m²</option>
-                                <option value="7">90m² - 119m²</option>
-                                <option value="8">120m² - 149m²</option>
-                                <option value="9">150m² - 179m²</option>
-                                <option value="10">180m² - 209m²</option>
-                                <option value="11">>210m²</option>
+                            <select name="C16" class="form-select" id="exampleFormControlInput23" aria-label="Default select example">
+                                <option value="1">60m² - 89m²</option>
+                                <option value="2">90m² - 119m²</option>
+                                <option value="3">120m² - 149m²</option>
+                                <option value="4">150m² - 179m²</option>
+                                <option value="5">180m² - 209m²</option>
+                                <option value="6">>210m²</option>
                             </select>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-12 my-2">
                             <label for="exampleFormControlInput24" class="form-label title">Sertifikat Rumah</label>
-                            <select class="form-select" id="exampleFormControlInput24" aria-label="Default select example">
-                                <option value="6">SHM</option>
-                                <option value="7">SHGB</option>
-                                <option value="8">AJB</option>
-                                <option value="9">GIRIK</option>
+                            <select name="C13" class="form-select" id="exampleFormControlInput24" aria-label="Default select example">
+                                <option value="4">SHM</option>
+                                <option value="3">SHGB</option>
+                                <option value="2">AJB</option>
+                                <option value="1">GIRIK</option>
                             </select>
                         </div>
                     </div>
@@ -143,8 +145,10 @@
                             </select>
                         </div>
                     </div>
-                    <a href="/alternative" class="btn btn-submit my-2 px-5" type="submit" >Cari</a>
+                    <button class="btn btn-submit my-2 px-5" type="submit" class="btn btn-primary">Filter</button>
+                    </form>
                 </div> 
+
             </div>
         </div>
         {{-- Header --}}
@@ -176,14 +180,34 @@
     </div>
 
 
-    <script>
+    {{-- <script>
         document.getElementById("search-input").addEventListener("keydown", function(event){
             if (event.key === "Enter") {
                 event.preventDefault();
                 document.getElementById("search-form").submit();
             }
-        });  
-    </script>
+        });
+
+        function filterData(selectedValue) {
+            let filterData;
+            case '1':
+                filteredData = alternative.filter(item => item.luas >= 36 && item.luas <= 45);
+                break;
+            case '2':
+                filteredData = alternative.filter(item => item.luas >= 54 && item.luas <= 60);
+                break;
+            case '3':
+                filteredData = alternative.filter(item => item.luas >= 70 && item.luas <= 90);
+                break;
+            case '4':
+                filteredData = alternative.filter(item => item.luas >= 120 && item.luas <= 200);
+                break;
+            case '5':
+                filteredData = alternative.filter(item => item.luas > 200);
+                break;
+
+        }
+    </script> --}}
 
     {{-- <p class="card-text">{{ $post["alternatif_name"] }}</p>
                 <p class="card-text">{{ $post["harga_rumah"] }}</p>

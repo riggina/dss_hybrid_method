@@ -23,10 +23,10 @@ return new class extends Migration
             $table->float('latitude');
             $table->float('longitude');
             $table->integer('tenor_tahun_cicilan');
-            $table->integer('C1');
-            $table->integer('C2');
-            $table->integer('C3');
-            $table->integer('C4');
+            $table->bigInteger('C1');
+            $table->bigInteger('C2');
+            $table->bigInteger('C3');
+            $table->bigInteger('C4');
             $table->float('C5');
             $table->float('C6');
             $table->float('C7');

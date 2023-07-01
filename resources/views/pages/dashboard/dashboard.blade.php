@@ -16,7 +16,6 @@
                                     Welcome back, {{ auth()->user()->name }}
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                  <li><a class="dropdown-item" href="#">Action</a></li>
                                   <li><a class="dropdown-item" href="/register">Create New Admin</a></li>
                                 </ul>
                               </li>   
@@ -34,28 +33,40 @@
             <table>
                 <thead>
                     <tr>
-                        <th>Alternatif</th>
-                        <th class="date">Created Date</th>
-                        <th>Harga Rumah</th>
-                        <th>Luas Bangunan</th>
-                        <th>Luas Tanah</th>
-                        <th>Sertifikat Rumah</th>
-                        <th>Kamar Tidur</th>
-                        <th>Kamar Mandi</th>
-                        <th></th>
+                        <th class="date">Alternatif</th>
+                        <th class="date">Tanggal</th>
+                        <th class="date">Harga Rumah</th>
+                        <th class="date">Luas Bangunan</th>
+                        <th class="date">Luas Tanah</th>
+                        <th class="date">Sertifikat Rumah</th>
+                        <th class="date">Kamar Tidur</th>
+                        <th class="date">Kamar Mandi</th>
+                        <th ></th>
                     </tr> 
                 </thead>
                     <tbody>
                         @foreach($alternatives as $alternative)
+                        {{-- @php
+                        dd($alternatives);
+                        @endphp --}}
                         <tr>
-                            <td>{{ $alternative->alternative_name }}</td>
+                            <td class="date">{{ $alternative->alternative_name }}</td>
                             <td class="date">{{  $alternative->created_at->format('Y-m-d') }}</td>
-                            <td>Rp. {{  $alternative->harga_rumah }}</td>
-                            <td>{{  $alternative->luas_bangunan }}</td>
-                            <td>{{  $alternative->luas_tanah }}</td>
-                            <td>{{  $alternative->sertifikat_rumah }}</td>
-                            <td>{{  $alternative->kamar_tidur }}</td>
-                            <td>{{  $alternative->kamar_mandi }}</td>
+                            <td class="date">Rp. {{  number_format($alternative->C1, 0, ',', '.' )}}</td>
+                            <td class="date">{{  $alternative->C15 }} m²</td>
+                            <td class="date">{{  $alternative->C16}} m²</td>
+                            <td class="date">
+                                @if($alternative->C13 == 4)
+                                SHM
+                                @elseif($alternative->C13 == 3)
+                                SHGB
+                                @elseif($alternative->C13 == 2)
+                                AJB
+                                @elseif($alternative->C13 == 1)
+                                GIRIK
+                                @endif</td>
+                            <td class="date">{{  $alternative->C18 }}</td>
+                            <td class="date">{{  $alternative->C19 }}</td>
                             <td class="btn-CUD">
                                 <a class="btn edit-icon" href="/dashboard/{{ $alternative->id }}">
                                     <i class="bi bi-eye-fill"></i>

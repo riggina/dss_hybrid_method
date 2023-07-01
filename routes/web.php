@@ -8,6 +8,8 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\ProfileController;
 use App\Http\Controllers\NormalizationController;
+use App\Http\Controllers\DashboardController;
+
 
 
 /*
@@ -35,15 +37,17 @@ Route::middleware('auth')->group(function () {
     // Route::get('dashboard', [AlternativeController::class, 'index']);
     Route::post('logout', [LogoutController::class, 'logout']);
     Route::resource('/dashboard', AlternativeController::class);
-    Route::put('/dashboard/{alternative}',[AlternativeController::class, 'update'])->name('alternative.update');
+    // Route::put('/dashboard/{alternative}',[AlternativeController::class, 'update'])->name('alternative.update');
     Route::get('/dashboard/checkSlug', [AlternativeController::class, 'checkSlug'])->name('alternative_slug');
-    Route::get('/ranking', [NormalizationController::class, 'hybrid']);
+    Route::get('/peringkat', [DashboardController::class, 'calculate']);
 });
 
 
 
-// Route::get('/alternative', [AlternativeController::class, 'index']);
-// Route::get('/alternative/{alternative}', [AlternativeController::class, 'show']);
+Route::get('/alternative', [HomeController::class, 'search']);
+Route::get('/alternative/{alternative}', [HomeController::class, 'show']);
+Route::post('/filter', [NormalizationController::class, 'filterByLuasBangunan'])->name('filterByLuasBangunan');
+Route::get('/dariperingkat', [NormalizationController::class, 'hybrid']);
 
 
 // Route::group(['middleware'=>'is_admin', 'prefix'=>'admin'], function (){

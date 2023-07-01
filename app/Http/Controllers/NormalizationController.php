@@ -4,10 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Alternative;
+use Illuminate\Pagination\Paginator;
 
 class NormalizationController extends Controller
 {
-    public function weighted()
+    private function weighted()
     {
         $alternatives = Alternative::all();
         $costs = ['C1', 'C2', 'C3', 'C4', 'C5', 'C6', 'C7', 'C8', 'C9', 'C10', 'C11', 'C12'];
@@ -161,7 +162,7 @@ class NormalizationController extends Controller
         if ($denominator != 0) {
             $correlation = $numerator / $denominator;
         } else {
-            $correlation = 0; // Handle division by zero error
+            $correlation = 0; 
         }
 
         return $correlation;
@@ -171,40 +172,93 @@ class NormalizationController extends Controller
 
         ///Tahapan COPRAS-ARAS
         $alternatives = Alternative::all();
+
+        // dd($alternatives);
         $costs = ['C1', 'C2', 'C3', 'C4', 'C5', 'C6', 'C7', 'C8', 'C9', 'C10', 'C11', 'C12'];
         $benefits = ['C13', 'C14', 'C15', 'C16', 'C17', 'C18', 'C19','C20'];
         $criterias = ['C1','C2','C3','C4','C5','C6','C7', 'C8', 'C9', 'C10', 'C11', 'C12', 'C13', 'C14', 'C15', 'C16', 'C17', 'C18', 'C19', 'C20' ];
 
-        $sumArray = array_fill(0, count($costs), 0);
+        
+        foreach( $benefits as $benefit)
+        {
+            $valBenefit[] = $alternatives->max($benefit);
+            
+        }
 
-        // Menghitung penjumlahan vertikal
-        foreach ($alternatives as $alternative) {
-            for ($i = 0; $i < count($costs); $i++) {
-                $cost = $costs[$i];
-                $sumArray[$i] += $alternative->$cost;
-            }
-            for ($i = 0; $i < count($benefits); $i++) {
-                $benefit = $benefits[$i];
-                $sumArray[$i] += $alternative->$benefit;
+        foreach ($costs as $cost)
+        {
+            $valCost[] = $alternatives->min($cost);
+        }
 
+        // dd($valCost);
+
+        $mapOnlyCriteria = $alternatives->map(function ($alternative) {
+            return [
+                'C1' => $alternative->C1,
+                'C2' => $alternative->C2,
+                'C3' => $alternative->C3,
+                'C4' => $alternative->C4,
+                'C5' => $alternative->C5,
+                'C6' => $alternative->C6,
+                'C7' => $alternative->C7,
+                'C8' => $alternative->C8,
+                'C9' => $alternative->C9,
+                'C10' => $alternative->C10,
+                'C11' => $alternative->C11,
+                'C12' => $alternative->C12,
+                'C13' => $alternative->C13,
+                'C14' => $alternative->C14,
+                'C15' => $alternative->C15,
+                'C16' => $alternative->C16,
+                'C17' => $alternative->C17,
+                'C18' => $alternative->C18,
+                'C19' => $alternative->C19,
+                'C20' => $alternative->C20,
+            ];
+        });
+
+        $mergeOptimum = array_merge($valCost, $valBenefit);
+
+        $sumArray = array_fill(0, 20, 0);
+        foreach ($mapOnlyCriteria as $criteria) {
+          
+            for ($i = 1; $i <= 20; $i++) {
+                $property = 'C' . $i;
+                $sumArray[$i-1] += $criteria[$property];
             }
         }
+
+        $sumArraywithOpt = [];
+
+        for ($i = 0; $i < count($sumArray); $i++) {
+            $sumArraywithOpt[$i] = $sumArray[$i] + $mergeOptimum[$i];
+        }
+        // dd($sumArraywithOpt);
 
         $Normalization = [];
-        foreach ($alternatives as $alternative) {
-            $dividedValues = [];
-            for ($i = 0; $i < count($costs); $i++) {
-                $cost = $costs[$i];
-                $dividedValues[] = $alternative->$cost / $sumArray[$i];
+        foreach ($mapOnlyCriteria as $criteria) {
+            $dividedCriteria = [];
+
+            foreach ($criteria as $key => $value) {
+                $property = substr($key, 1); // Menghapus huruf "C" dari nama properti
+                $dividedCriteria[] = $value / $sumArraywithOpt[$property - 1];
             }
-            for ($i = 0; $i < count($benefits); $i++) {
-                $benefit = ($benefits[$i]);
-                $dividedValues[] =  $alternative->$benefit / $sumArray[$i];
-            }
-            $Normalization[] = $dividedValues;
+
+            $Normalization[] = $dividedCriteria;
         }
+
+        // dd($Normalization);
+
+        $NormalizationOpt= [];
+
+        for ($i = 0; $i < count($mergeOptimum); $i++) {
+            $NormalizationOpt[$i] = $mergeOptimum[$i] / $sumArraywithOpt[$i];
+        }
+
+        // dd($NormalizationOpt);
         
         $W = $this->weighted();
+        // dd($W);
 
         $WeightedMatrix = [];
 
@@ -216,33 +270,206 @@ class NormalizationController extends Controller
                 $result = $row[$j] * $W[$j];
                 $rowresult[] = $result;
             }
-
             $WeightedMatrix[] = $rowresult;
 
         }
+        // dd($WeightedMatrix);
 
-        dd($WeightedMatrix);
+        $WeightedMatrixforOptVal = [];
+        for ($i = 0; $i < count($NormalizationOpt); $i++) {
+            $resultOpt = $NormalizationOpt[$i] * $W[$i];
+            $WeightedMatrixforOptVal[] = $resultOpt;
+        }
+        
+        array_unshift($WeightedMatrix, $WeightedMatrixforOptVal);
+       
+         //S-1
+        $Smin1Val = [];
+        foreach ($WeightedMatrix as $row) {
+            $splicearraymin = array_slice($row, 0, 12);
+            $Smin1Val[] = array_sum($splicearraymin);
+        }
 
+         //S+1 
+        $Splus1Val = [];
+        foreach ($WeightedMatrix as $row) {
+            $splicearrayplus = array_slice($row, 12, 8);
+            $Splus1Val[] = array_sum($splicearrayplus);
+        } 
 
+        //S-1 min
+        $Smin1min =  min($Smin1Val);
+        // dd($Smin1min);
 
-        // foreach ($costs as $cost) {
-        //     $sum[$cost] += $alternatives->$cost;
-        // }
+        //S-1 min / S-1 [];
+        $hasil = [];
+        foreach ($Smin1Val as $element) {
+            $divide = $Smin1min / $element;
+            $hasil[] = $divide;
+        }
 
-        // foreach($benefits as $benefit) {
-        //     $sum[$benefit] = 0;
-        // }
+        //Sum S-1 min / S-1 [];
+        $sumPenyebut = array_sum($hasil);
 
-        // foreach( $alternatives as $alternative) {
-        //     foreach($costs as $cost) {
-        //         $alternative->$cost = $alternative->$cost / $sum[$cost];
-        //     }
-        //     // foreach($benefits as $benefit) {
-        //     //     $sum[$benefit] += $alternative->$benefit;
-        //     // }
-        // }
+        //Sum S-1
+        $hasilSum = array_sum($Smin1Val);
 
-        // dd($dividedArray);
+        //Pembilang
+        $pembilang = $Smin1min * $hasilSum;
+
+        //Penyebut
+        $penyebut = [];
+        foreach($Smin1Val as $v) {
+            $multiply = $v * $sumPenyebut;
+            $penyebut[] = $multiply;
+        }
+
+        //Pembagian
+        $resultDivided = [];
+        foreach ($penyebut as $hasilpenyebut) {
+            $divide = $pembilang / $hasilpenyebut;
+            $resultDivided[] = $divide;
+        }
+       
+        //Qi
+        $Qi = array_map(function ($a, $b) {
+            return $a + $b;
+        }, $Splus1Val, $resultDivided);
+        
+        $R0 = $Qi[0];
+
+        array_shift($Qi);
+        
+  
+        foreach ($Qi as $Qvalue) {
+            $multiple = $Qvalue / $R0;
+            $K[] = $multiple;
+        }
+
+        // dd($alternatives);
+        $alternativesArray = $alternatives->toArray();
+       
+        $alternativeValues = array_column($alternativesArray, 'alternative_name');
+        // dd($alternativeValues);
+
+        array_multisort($K, SORT_DESC, $alternativeValues, $alternativesArray);
+        $rankedAlternatives = [];
+        foreach ($K as $index => $val) {
+            $alternative = $alternativesArray[$index];
+            $alternative['score'] = $val;
+            $rankedAlternatives[] = $alternative;
+        }
+        
+        usort($rankedAlternatives, function ($a, $b) {
+            return $b['score'] - $a['score'];
+        });
+
+        $ranking = 1;
+        foreach ($rankedAlternatives as &$alternative) {
+            $alternative['rank'] = $ranking;
+            $ranking++;
+        }
+        $perPage = 6;
+        $rankedAlternatives = new Paginator($rankedAlternatives, $perPage);
+        return view('pages.displayranking', [
+            'items' => $rankedAlternatives
+        ]);
+
     }
+    public function filterByLuasBangunan(Request $request)
+        {
+            $token = $request->input('_token');
+            $sertifikat = $request->input('C13');
+            $luasBangunan = $request->input('C15');
+            $luasTanah = $request->input('C16');
+            $alternatives = Alternative::query();
+
+            switch ($sertifikat) {
+                case '1':
+                    $alternatives->where('C13', 1);
+                    break;
+                case '2':
+                    $alternatives->where('C13', 2);
+                    break;
+                case '3':
+                    $alternatives->where('C13', 3);
+                    break;
+                case '4':
+                    $alternatives->where('C13', 4);
+                    break;
+                default:
+                    // No filtering applied
+                    break;
+            }
+
+            switch ($luasTanah) {
+                case '1':
+                    $range = [60, 89];
+                    $alternatives->whereBetween('C16', $range);
+                    break;
+                case '2':
+                    $range = [90, 119];
+                    $alternatives->whereBetween('C16', $range);
+                    break;
+                case '3':
+                    $range = [120, 149];
+                    $alternatives->whereBetween('C16', $range);
+                    break;
+                case '4':
+                    $range = [150, 179];
+                    $alternatives->whereBetween('C16', $range);
+                    break;
+                case '5':
+                    $range = [180, 209];
+                    $alternatives->whereBetween('C16', $range);
+                    break;
+                case '6':
+                    $alternatives->where('C16', '>', 210);
+                    break;
+                   
+                default:
+                    // No filtering applied
+                    break;
+            }
+
+            switch ($luasBangunan) {
+                case '1':
+                    $range = [36, 45];
+                    $alternatives->whereBetween('C15', $range);
+                    break;
+                case '2':
+                    $range = [54, 60];
+                    $alternatives->whereBetween('C15', $range);
+                    break;
+                case '3':
+                    $range = [70, 90];
+                    $alternatives->whereBetween('C15', $range);
+                    break;
+                case '4':
+                    $range = [120, 200];
+                    $alternatives->whereBetween('C15', $range);
+                    break;
+                case '5':
+                    $alternatives->where('C15', '>', 200);
+                    break;
+                default:
+                    // No filtering applied
+                    break;
+            }
+
+            $filteredItem = $alternatives->get();
+
+             // Menentukan jumlah item per halaman
+            $perPage = 4;
+
+            // Membuat instance Paginator
+            $filteredItem = new Paginator($filteredItem, $perPage);
+
+            // dd($rankedAlternatives);
+
+            return view('pages.filterresult', [
+                'items' => $filteredItem
+            ]);
+        }
 
 }
