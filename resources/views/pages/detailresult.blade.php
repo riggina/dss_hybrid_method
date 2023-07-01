@@ -20,13 +20,13 @@
         <div class="row">
                 <div class="col-md-6 p-0 m-0 d-flex justify-content-start">
                     <div class="col-md-4" style="margin-right:1rem">
-                        <p class="harga-detail">IDR. {{ $alternative->harga_rumah }}</p>   
+                        <p class="harga-detail">Rp. {{ number_format($alternative->C1, 0, ',', '.') }}</p>   
                     </div>
                     <div class="col-md-2" style="margin-right:1rem">
-                        <p class="lt-detail">LT. {{ $alternative->luas_tanah }} m²</p>
+                        <p class="lt-detail">LT. {{ $alternative->C16 }} m²</p>
                     </div>
                     <div class="col-md-2" style="margin-right:1rem">
-                        <p class="lb-detail">LB. {{ $alternative->luas_bangunan }} m²</p>
+                        <p class="lb-detail">LB. {{ $alternative->C15 }} m²</p>
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -35,10 +35,10 @@
                             <h6>Kontak Properti</h6>
                         </div>
                         <div class="col-md-6">
-                            <a href="https://wa.me/6287716301634" target="_blank">
+                            <a href="https://wa.me/{{ $alternative->contact }}" target="_blank">
                             <button class="btn contact">
                                 <i class="bi bi-whatsapp"></i>
-                                <span>087716301634</span>
+                                <span>{{ $alternative->contact }}</span>
                             </button>
                             </a>
                         </div>
@@ -53,7 +53,7 @@
         <div class="row my-3">
             <div class="col-md-6">
                 <div class="col-md-12">
-                    <h5>Detail Rumah</h5>
+                    <h4>Detail Rumah</h4>
                 </div>
                 <br/>
                 <div class="row">
@@ -67,74 +67,106 @@
                         <h6>Harga Rumah</h6>
                     </div>
                     <div class="col-md-6 text-detail">
-                        <p>IDR. {{ $alternative->harga_rumah }}</p>
+                        <p>
+                            Rp. {{ number_format($alternative->C1, 0, ',', '.') }}
+                        </p>
                     </div>
                     <div class="col-md-6 ">
                         <h6>DP Rumah</h6>
                     </div>
                     <div class="col-md-6 text-detail">
-                        <p>IDR. {{ $alternative->dp_rumah }}</p>
+                        <p>Rp. {{ number_format($alternative->C2, 0, ',', '.') }}</p>
                     </div>
                     <div class="col-md-6">
                         <h6>Sertifikat Rumah</h6>
                     </div>
                     <div class="col-md-6 text-detail">
-                        <p>{{ $alternative->sertifikat_rumah }}</p>
+                        <p>
+                            @if($alternative->C13 == 4)
+                            SHM
+                            @elseif($alternative->C13 == 3)
+                            SHGB
+                            @elseif($alternative->C13 == 2)
+                            AJB
+                            @elseif($alternative->C13 == 1)
+                            GIRIK
+                            @endif
+                        </p>
                     </div>
                     <div class="col-md-6">
                         <h6>Daya Listrik</h6>
                     </div>
                     <div class="col-md-6 text-detail">
-                        <p>{{ $alternative->daya_listrik }} Watt</p>
+                        <p>{{ $alternative->C14 }} Watt</p>
                     </div>
                     <div class="col-md-6">
                         <h6>Luas Bangunan</h6>
                     </div>
                     <div class="col-md-6 text-detail">
-                        <p>{{ $alternative->luas_bangunan }}</p>
+                        <p>{{ $alternative->C15 }} m²</p>
                     </div>
                     <div class="col-md-6">
                         <h6>Luas Tanah</h6>
                     </div>
                     <div class="col-md-6 text-detail">
-                        <p>{{ $alternative->luas_tanah }} m²</p>
+                        <p>{{ $alternative->C16 }} m²</p>
                     </div>
                     <div class="col-md-6">
                         <h6>Tipe Rumah</h6>
                     </div>
                     <div class="col-md-6 text-detail">
-                        <p>{{ $alternative->tipe_rumah }}</p>
+                        <p>{{ $alternative->C17 }}</p>
                     </div>
                     <div class="col-md-6">
                         <h6>Kamar Tidur</h6>
                     </div>
                     <div class="col-md-6 text-detail">
-                        <p>{{ $alternative->kamar_tidur }}</p>
+                        <p>{{ $alternative->C18 }}</p>
                     </div>
                     <div class="col-md-6">
                         <h6>Kamar Mandi</h6>
                     </div>
                     <div class="col-md-6 text-detail">
-                        <p>{{ $alternative->kamar_mandi }}</p>
+                        <p>{{ $alternative->C19 }}</p>
                     </div>
                     <div class="col-md-6">
                         <h6>Ketersediaan Unit</h6>
                     </div>
                     <div class="col-md-6 text-detail">
-                        <p>{{ $alternative->available_status }}</p>
+                        <p>
+                            @if ($alternative->available_status == 1)
+                            Tersedia
+                            @else
+                            Tidak Tersedia
+                            @endif
+                        </p>
                     </div>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="col-md-12 mx-3">
-                    <h5>Deskripsi</h5>
+                    <h4>Jarak</h4>
                 </div>
                 <br/>
-                <div class="col-md-12 mx-3 text-detail">
-                    <p>HANYA 10 MENIT KE TOL BOR10 MENIT KE LOTTEMART10 MENIT KE HYPERMART10 MENIT KE TRANSMART15 MENIT KE BOGOR SQUARE15 MENIT KE YOGYA DEPT STORE10 MENIT KE PASAR ANYAR10 MENIT KE STASIUN KA BOGORKAMPUS TERDEKAT 15 MENIT KE UNIVERSITAS NUSA BANGSA, UNIVERSITAS IBNU KALDUN & UNIVERSITAS TERBUKARUMAH SAKIT TERDEKAT 10 MENIT KE HERMINA, 15 MENIT KE BUNDA SURYATNI & 15 MENIT RS ISLAM BOGOR</p> 
+                <div class="col-md-12 mx-3 text-detail d-flex">
+                    <div class="col">
+                        <ul>
+                            <li>Jarak ke Pinggir Kota {{ $alternative->C5 }} m²</li>
+                            <li>Jarak ke Pusat Kota {{ $alternative->C6 }} m²</li>
+                            <li>Jarak ke Jalan Raya {{ $alternative->C7 }} m²</li>
+                        </ul>
+                    </div>
+                    <div class="col">
+                        <ul>
+                            <li>Jarak ke Tempat Hiburan {{ $alternative->C9 }} m²</li>
+                            <li>Jarak ke Sekolah {{ $alternative->C10 }} m²</li>
+                            <li>Jarak ke Bandara {{ $alternative->C11 }} m²</li>
+                            <li>Jarak ke Pusat Perbelanjaan {{ $alternative->C8 }} m²</li>
+                        </ul>
+                    </div>
                 </div>
                 <div class="col-md-12 mx-3">
-                    <h5>Lokasi</h5>
+                    <h4>Lokasi</h4>
                 </div>
                 <div class="col-md-12 mx-3">
                     <div id="map"></div>
@@ -144,6 +176,30 @@
         <div class="divider"></div>
     </div>
 </div>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+    var map = L.map('map').setView([-1.269160, 116.825264], 15); // Koordinat default (Balikpapan)
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    var alternatives = @json($alternative);
+    console.log(typeof alternatives)
+
+    Object.keys(alternatives).forEach(function (key) {
+        var alternative = alternatives[key];
+        var latitude = alternatives.latitude;
+        var longitude = alternatives.longitude;
+        var marker = L.marker([latitude, longitude]).addTo(map);
+        marker.bindPopup(alternative.alternative_name); // Menambahkan informasi pada marker
+
+        marker.on('click', function () {
+            alert('Marker clicked: ' + alternative.alternative_name);
+        });
+    });
+})
+</script>
 @endsection
 
 @section('footer')

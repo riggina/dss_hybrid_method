@@ -16,13 +16,13 @@
         <div class="menu">
             <ul class="menu-links">
                 <li class="nav-link {{ request()->is('dashboard*') ? 'active' : '' }}">
-                    <a href='dashboard'>
+                    <a href="/dashboard">
                         <i class='bx bx-home-alt icon'></i>
                         <span class="text nav-text">Dashboard</span>
                     </a>
                 </li>
                 <li class="nav-link {{ request()->is('ranking*') ? 'active' : '' }}">
-                    <a href="/ranking">
+                    <a href="/peringkat">
                         <i class="bi bi-bar-chart-line icon"></i>
                         <span class="text nav-text">Peringkat</span>
                     </a>

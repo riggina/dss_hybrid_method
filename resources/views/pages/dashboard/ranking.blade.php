@@ -31,21 +31,25 @@
                         <th class="date">Rank</th>
                         <th  class="date">Skor Akhir Perhitungan</th>
                         <th  class="date">Nama Alternatif</th>
-                        <th  class="date">Alamat</th>
-                        <th  class="date">Created Date</th>
+                        <th  class="date">Harga Rumah</th>
+                        <th  class="date">Luas Tanah</th>
+                        <th  class="date">Luas Bangunan</th>
+                        <th  class="date">Tanggal Input Data</th>
                     </tr> 
                 </thead>
                 <tbody>
-                    @php
-                        $counter = 1;
-                    @endphp
                     @foreach($items as $key => $item)
+                    {{-- @php
+                        dd($items);
+                    @endphp --}}
                     <tr> 
-                        <td class="date">{{ $counter++ }}</td>
+                        <td class="date">{{ $item['rank']}}</td>
                         <td  class="date">{{ $item['score'] }}</td>
                         <td  class="date">{{ $item['alternative_name']}}</td>
-                        <td  class="date">{{ $item['alamat']}}</td>
-                        <td  class="date">{{ \Carbon\Carbon::parse($item['created_at'])->format('Y-m-d') }}</td>
+                        <td  class="date">Rp. {{  number_format($item['C1'], 0, ',', '.' )}}</td>
+                        <td  class="date">{{ $item['C16']}} m²</td>
+                        <td  class="date">{{ $item['C17']}} m²</td>
+                        <td  class="date">{{ \Carbon\Carbon::parse($item['created_at'])->format('d-m-Y') }}</td>
                     </tr>
                     @endforeach
                 </tbody>

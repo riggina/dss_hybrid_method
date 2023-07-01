@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Alternative;
+use Illuminate\Pagination\Paginator;
 
 class NormalizationController extends Controller
 {
@@ -161,7 +162,7 @@ class NormalizationController extends Controller
         if ($denominator != 0) {
             $correlation = $numerator / $denominator;
         } else {
-            $correlation = 0; // Handle division by zero error
+            $correlation = 0; 
         }
 
         return $correlation;
@@ -342,33 +343,133 @@ class NormalizationController extends Controller
   
         foreach ($Qi as $Qvalue) {
             $multiple = $Qvalue / $R0;
-            $K[] = $multiple; // Connect $K with the alternative using alternative_name
+            $K[] = $multiple;
         }
 
         // dd($alternatives);
         $alternativesArray = $alternatives->toArray();
        
-        // Buat array tambahan dengan nilai-nilai dari array $alternativesArray
         $alternativeValues = array_column($alternativesArray, 'alternative_name');
         // dd($alternativeValues);
 
-        // Lakukan sorting pada array $K berdasarkan $alternativeValues
         array_multisort($K, SORT_DESC, $alternativeValues, $alternativesArray);
         $rankedAlternatives = [];
         foreach ($K as $index => $val) {
-            $alternative = $alternativesArray[$index]; // Ambil alternative dengan indeks yang sesuai
-            $alternative['score'] = $val; // Tambahkan peringkat ke array alternative
-            $rankedAlternatives[] = $alternative; // Tambahkan alternative ke array rankedAlternatives
+            $alternative = $alternativesArray[$index];
+            $alternative['score'] = $val;
+            $rankedAlternatives[] = $alternative;
         }
+        
+        usort($rankedAlternatives, function ($a, $b) {
+            return $b['score'] - $a['score'];
+        });
 
-        // dd($rankedAlternatives);
-        return view('pages.dashboard.ranking', [
+        $ranking = 1;
+        foreach ($rankedAlternatives as &$alternative) {
+            $alternative['rank'] = $ranking;
+            $ranking++;
+        }
+        $perPage = 6;
+        $rankedAlternatives = new Paginator($rankedAlternatives, $perPage);
+        return view('pages.displayranking', [
             'items' => $rankedAlternatives
         ]);
 
-        
-        
-
     }
+    public function filterByLuasBangunan(Request $request)
+        {
+            $token = $request->input('_token');
+            $sertifikat = $request->input('C13');
+            $luasBangunan = $request->input('C15');
+            $luasTanah = $request->input('C16');
+            $alternatives = Alternative::query();
+
+            switch ($sertifikat) {
+                case '1':
+                    $alternatives->where('C13', 1);
+                    break;
+                case '2':
+                    $alternatives->where('C13', 2);
+                    break;
+                case '3':
+                    $alternatives->where('C13', 3);
+                    break;
+                case '4':
+                    $alternatives->where('C13', 4);
+                    break;
+                default:
+                    // No filtering applied
+                    break;
+            }
+
+            switch ($luasTanah) {
+                case '1':
+                    $range = [60, 89];
+                    $alternatives->whereBetween('C16', $range);
+                    break;
+                case '2':
+                    $range = [90, 119];
+                    $alternatives->whereBetween('C16', $range);
+                    break;
+                case '3':
+                    $range = [120, 149];
+                    $alternatives->whereBetween('C16', $range);
+                    break;
+                case '4':
+                    $range = [150, 179];
+                    $alternatives->whereBetween('C16', $range);
+                    break;
+                case '5':
+                    $range = [180, 209];
+                    $alternatives->whereBetween('C16', $range);
+                    break;
+                case '6':
+                    $alternatives->where('C16', '>', 210);
+                    break;
+                   
+                default:
+                    // No filtering applied
+                    break;
+            }
+
+            switch ($luasBangunan) {
+                case '1':
+                    $range = [36, 45];
+                    $alternatives->whereBetween('C15', $range);
+                    break;
+                case '2':
+                    $range = [54, 60];
+                    $alternatives->whereBetween('C15', $range);
+                    break;
+                case '3':
+                    $range = [70, 90];
+                    $alternatives->whereBetween('C15', $range);
+                    break;
+                case '4':
+                    $range = [120, 200];
+                    $alternatives->whereBetween('C15', $range);
+                    break;
+                case '5':
+                    $alternatives->where('C15', '>', 200);
+                    break;
+                default:
+                    // No filtering applied
+                    break;
+            }
+
+            $filteredItem = $alternatives->get();
+
+             // Menentukan jumlah item per halaman
+            $perPage = 4;
+
+            // Membuat instance Paginator
+            $filteredItem = new Paginator($filteredItem, $perPage);
+
+            // dd($rankedAlternatives);
+
+            return view('pages.filterresult', [
+                'items' => $filteredItem
+            ]);
+        }
 
 }

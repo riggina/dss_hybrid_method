@@ -16,16 +16,15 @@ class AlternativeController extends Controller
         return view('pages.dashboard.dashboard', [
             'alternatives' => Alternative::all()
         ]);
-        // , [
-        //     "alternatives" => Alternative::latest()->filter(request(['search']))->paginate(4)->withQueryString()
-        // ]);
+
+        dd($alternatives);
     }
 
     public function show($id)
     {
-        $alternative = Alternative::find($id);
+        $alternatives = Alternative::find($id);
         return view('pages.dashboard.detailalternative', [
-            "alternative" => $alternative
+            "alternative" => $alternatives
         ]);  
     }
     /**
@@ -43,30 +42,44 @@ class AlternativeController extends Controller
     {
         $validateData = $request->validate([
             'alternative_name' => 'required|max:255',
-            'slug' => 'required|unique:alternatives',
             'alamat'=> 'required',
-            // 'img_url'= ,
+            'contact' => 'required',
+            'img_url'=> 'image|mimes:jpeg,jpg,png|max:2048',
             'available_status' => 'required',
             'latitude' => 'required',
             'longitude' => 'required',
-            'harga_rumah' => 'required',
-            'dp_rumah' => 'required',
-            'cicilan_rumah' => 'required',
-            'jarak_pinggir_kota' => 'required',
-            'jarak_pusat_kota' => 'required',
-            'jarak_jalan_raya' => 'required',
-            'jarak_pusat_perbelanjaan' => 'required',
-            'jarak_tempat_hiburan'=> 'required',
-            'jarak_sekolah' => 'required',
-            'sertifikat_rumah' => 'required',
-            'daya_listrik' => 'required',
-            'luas_bangunan' => 'required',
-            'luas_tanah' => 'required',
-            'tipe_rumah' => 'required',
-            'kamar_tidur' => 'required',
-            'kamar_mandi' => 'required',
-            'lebar_jalan' => 'required'
+            'tenor_tahun_cicilan' => 'required',
+            'C1' => 'required',
+            'C2' => 'required',
+            'C3' => 'required',
+            'C4' => 'required',
+            'C5' => 'required',
+            'C6' => 'required',
+            'C7' => 'required',
+            'C8' => 'required',
+            'C9' => 'required',
+            'C10' => 'required',
+            'C11' => 'required',
+            'C12' => 'required',
+            'C13' => 'required',
+            'C14' => 'required',
+            'C15' => 'required',
+            'C16' => 'required',
+            'C17' => 'required',
+            'C18' => 'required',
+            'C19' => 'required',
+            'C20' => 'required',
+            
         ]);
+        if($request->hasFile('img_url'))
+        {
+            $destination_path = 'public/images/alternative';
+            $image = $request->file('img_url');
+            $image_name = $image->getClientOriginalName();
+            $path = $request->file('img_url')->storeAs($destination_path, $image_name);
+
+            $validateData['img_url'] = $image_name;
+        }
 
         $validateData['user_id'] = auth()->user()->id;
 
@@ -98,73 +111,61 @@ class AlternativeController extends Controller
     {
         $rules = [
             'alternative_name' => 'required|max:255',
-            'slug' => 'required',
             'alamat'=> 'required',
-            // 'img_url'= ,
+            'contact' => 'required',
+            'img_url'=> 'image|mimes:jpeg,jpg,png|max:2048',
             'available_status' => 'required',
             'latitude' => 'required',
             'longitude' => 'required',
-            'harga_rumah' => 'required',
-            'dp_rumah' => 'required',
-            'cicilan_rumah' => 'required',
-            'jarak_pinggir_kota' => 'required',
-            'jarak_pusat_kota' => 'required',
-            'jarak_jalan_raya' => 'required',
-            'jarak_pusat_perbelanjaan' => 'required',
-            'jarak_tempat_hiburan'=> 'required',
-            'jarak_sekolah' => 'required',
-            'sertifikat_rumah' => 'required',
-            'daya_listrik' => 'required',
-            'luas_bangunan' => 'required',
-            'luas_tanah' => 'required',
-            'tipe_rumah' => 'required',
-            'kamar_tidur' => 'required',
-            'kamar_mandi' => 'required',
-            'lebar_jalan' => 'required'
+            'C1' => 'required',
+            'C2' => 'required',
+            'C3' => 'required',
+            'C4' => 'required',
+            'C5' => 'required',
+            'C6' => 'required',
+            'C7' => 'required',
+            'C8' => 'required',
+            'C9' => 'required',
+            'C10' => 'required',
+            'C11' => 'required',
+            'C12' => 'required',
+            'C13' => 'required',
+            'C14' => 'required',
+            'C15' => 'required',
+            'C16' => 'required',
+            'C17' => 'required',
+            'C18' => 'required',
+            'C19' => 'required',
+            'C20' => 'required',
         ];  
-        
-        // if($request->slug != $alternative->slug) {
-        //     $rules['slug'] = 'required|unique:alternatives';
-        // }
 
         $validatedData = $request->validate($rules);
+        if($request->hasFile('img_url'))
+        {
+            $destination_path = 'public/images/alternative';
+            $image = $request->file('img_url');
+            $image_name = $image->getClientOriginalName();
+            $path = $request->file('img_url')->storeAs($destination_path, $image_name);
+
+            $validatedData['img_url'] = $image_name;
+        }
 
         $validatedData['user_id'] = auth()->user()->id;
 
-        $alternative = Alternative::find($id);
+        $alternative = Alternative::findorFail($id);
 
-        $alternative->update([
-            'alternative_name' => $request->alternative_name,
-            'slug' => $request->slug,
-            'alamat'=> $request->alamat,
-            // 'img_url'= ,
-            'available_status' => $request->available_status,
-            'latitude' => $request->latitude,
-            'longitude' => $request->longitude,
-            'harga_rumah' => $request->harga_rumah,
-            'dp_rumah' => $request->dp_rumah,
-            'cicilan_rumah' => $request->cicilan_rumah,
-            'jarak_pinggir_kota' => $request->jarak_pinggir_kota,
-            'jarak_pusat_kota' => $request->jarak_pusat_kota,
-            'jarak_jalan_raya' => $request->jarak_jalan_raya,
-            'jarak_pusat_perbelanjaan' => $request->jarak_pusat_perbelanjaan,
-            'jarak_tempat_hiburan'=> $request->jarak_tempat_hiburan,
-            'jarak_sekolah' => $request->jarak_sekolah,
-            'sertifikat_rumah' => $request->sertifikat_rumah,
-            'daya_listrik' => $request->daya_listrik,
-            'luas_bangunan' => $request->luas_bangunan,
-            'luas_tanah' => $request->luas_tanah,
-            'tipe_rumah' => $request->tipe_rumah,
-            'kamar_tidur' => $request->kamar_tidur,
-            'kamar_mandi' => $request->kamar_mandi,
-            'lebar_jalan' => $request->lebar_jalan,
-        ]);
-        $alternative->save();
+        if ($alternative->update($validatedData)) {
+            return redirect('/dashboard');
+        } else {
+            return back()->with('error', 'Gagal mengupdate alternative.');
+        }
+        // $alternative->update($validatedData);
+        // $alternative->save();
 
         // Alternative::where('id', $alternative->id)
         //         ->update($validatedData);
 
-        return redirect('/dashboard');
+        // return redirect('/dashboard');
             
     }
 
