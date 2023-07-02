@@ -164,13 +164,7 @@ class AlternativeController extends Controller
         } else {
             return back()->with('error', 'Gagal mengupdate alternative.');
         }
-        // $alternative->update($validatedData);
-        // $alternative->save();
 
-        // Alternative::where('id', $alternative->id)
-        //         ->update($validatedData);
-
-        // return redirect('/dashboard');
             
     }
 
