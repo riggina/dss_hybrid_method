@@ -21,7 +21,7 @@
                         <span class="text nav-text">Dashboard</span>
                     </a>
                 </li>
-                <li class="nav-link {{ request()->is('ranking*') ? 'active' : '' }}">
+                <li class="nav-link {{ request()->is('peringkat*') ? 'active' : '' }}">
                     <a href="/peringkat">
                         <i class="bi bi-bar-chart-line icon"></i>
                         <span class="text nav-text">Peringkat</span>

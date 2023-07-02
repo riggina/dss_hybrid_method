@@ -17,6 +17,7 @@
                 <div class="row">
                     <div class="col-md-4 ">
                         <div class="row dash">
+                            <input type="hidden" name="oldImage" value="{{ $alternative->img_url }}">
                             @if($alternative->img_url)
                             <div class="col-md-3 preview-foto">
                                 <img class="preview-foto" id="preview" src="{{ asset('/storage/images/alternative/'. $alternative->img_url) }}">

@@ -369,103 +369,101 @@ class NormalizationController extends Controller
             $alternative['rank'] = $ranking;
             $ranking++;
         }
-        $perPage = 6;
+        
+        $perPage = 8;
         $rankedAlternatives = new Paginator($rankedAlternatives, $perPage);
         return view('pages.displayranking', [
             'items' => $rankedAlternatives
         ]);
 
     }
-    public function filterByLuasBangunan(Request $request)
+    public function filterBy(Request $request)
         {
             $token = $request->input('_token');
+            $min_harga = $request->input('min_harga');
+            $max_harga = $request->input('max_harga');
             $sertifikat = $request->input('C13');
             $luasBangunan = $request->input('C15');
             $luasTanah = $request->input('C16');
+            $kamarTidur = $request->input('C18');
+            $kamarMandi = $request->input('C19');
             $alternatives = Alternative::query();
 
-            switch ($sertifikat) {
-                case '1':
-                    $alternatives->where('C13', 1);
-                    break;
-                case '2':
-                    $alternatives->where('C13', 2);
-                    break;
-                case '3':
-                    $alternatives->where('C13', 3);
-                    break;
-                case '4':
-                    $alternatives->where('C13', 4);
-                    break;
-                default:
-                    // No filtering applied
-                    break;
+            if(!empty($max_harga || $min_harga)) {
+                $alternatives->whereBetween('C1', [$min_harga, $max_harga]);
             }
-
-            switch ($luasTanah) {
-                case '1':
-                    $range = [60, 89];
-                    $alternatives->whereBetween('C16', $range);
-                    break;
-                case '2':
-                    $range = [90, 119];
-                    $alternatives->whereBetween('C16', $range);
-                    break;
-                case '3':
-                    $range = [120, 149];
-                    $alternatives->whereBetween('C16', $range);
-                    break;
-                case '4':
-                    $range = [150, 179];
-                    $alternatives->whereBetween('C16', $range);
-                    break;
-                case '5':
-                    $range = [180, 209];
-                    $alternatives->whereBetween('C16', $range);
-                    break;
-                case '6':
-                    $alternatives->where('C16', '>', 210);
-                    break;
-                   
-                default:
-                    // No filtering applied
-                    break;
+            if(!empty($sertifikat)) {
+                $alternatives->where('C13', $sertifikat);
             }
-
-            switch ($luasBangunan) {
-                case '1':
-                    $range = [36, 45];
-                    $alternatives->whereBetween('C15', $range);
-                    break;
-                case '2':
-                    $range = [54, 60];
-                    $alternatives->whereBetween('C15', $range);
-                    break;
-                case '3':
-                    $range = [70, 90];
-                    $alternatives->whereBetween('C15', $range);
-                    break;
-                case '4':
-                    $range = [120, 200];
-                    $alternatives->whereBetween('C15', $range);
-                    break;
-                case '5':
-                    $alternatives->where('C15', '>', 200);
-                    break;
-                default:
-                    // No filtering applied
-                    break;
+            if(!empty($kamarMandi)) {
+                $alternatives->where('C19', $kamarMandi);
+            }
+            if(!empty($kamarTidur)) {
+                $alternatives->where('C18', $kamarTidur);
+            }
+            if(!empty($luasTanah)) {
+                switch ($luasTanah) {
+                    case '1':
+                        $range = [60, 89];
+                        $alternatives->whereBetween('C16', $range);
+                        break;
+                    case '2':
+                        $range = [90, 119];
+                        $alternatives->whereBetween('C16', $range);
+                        break;
+                    case '3':
+                        $range = [120, 149];
+                        $alternatives->whereBetween('C16', $range);
+                        break;
+                    case '4':
+                        $range = [150, 179];
+                        $alternatives->whereBetween('C16', $range);
+                        break;
+                    case '5':
+                        $range = [180, 209];
+                        $alternatives->whereBetween('C16', $range);
+                        break;
+                    case '6':
+                        $alternatives->where('C16', '>', 210);
+                        break;
+                    
+                    default:
+                        // No filtering applied
+                        break;
+                }
+            }
+            if(!empty($luasBangunan)) {
+                switch ($luasBangunan) {
+                    case '1':
+                        $range = [36, 45];
+                        $alternatives->whereBetween('C15', $range);
+                        break;
+                    case '2':
+                        $range = [54, 60];
+                        $alternatives->whereBetween('C15', $range);
+                        break;
+                    case '3':
+                        $range = [70, 90];
+                        $alternatives->whereBetween('C15', $range);
+                        break;
+                    case '4':
+                        $range = [120, 200];
+                        $alternatives->whereBetween('C15', $range);
+                        break;
+                    case '5':
+                        $alternatives->where('C15', '>', 200);
+                        break;
+                    default:
+                        // No filtering applied
+                        break;
+                }
             }
 
             $filteredItem = $alternatives->get();
 
-             // Menentukan jumlah item per halaman
-            $perPage = 4;
-
-            // Membuat instance Paginator
+            $perPage = 8;
             $filteredItem = new Paginator($filteredItem, $perPage);
 
-            // dd($rankedAlternatives);
 
             return view('pages.filterresult', [
                 'items' => $filteredItem

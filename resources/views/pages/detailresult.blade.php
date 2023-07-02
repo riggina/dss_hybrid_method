@@ -8,42 +8,40 @@
               <li class="breadcrumb-item"><a href="/">Home</a></li>
               <li class="breadcrumb-item active" aria-current="page">Detail Pencarian</li>
             </ol>
-          </nav>
+        </nav>
     </div>
     <div>
         <div class="col-md-12">
-            <img src="{{ $alternative->img_url }}" class="gambar-rumah" alt="gambar rumah"/>
+            <img src="{{ asset('/storage/images/alternative/'. $alternative->img_url) }}" class="gambar-rumah" alt="gambar rumah"/>
         </div>
-        <div class="col-md-12 mt-3">
-            <p class="my-2 alternatif-name">{{ $alternative->alternative_name }}</p>
+        <div class="row d-flex mt-3">
+            <div class="col-md-6">
+                <p class="my-2 alternatif-name">{{ $alternative->alternative_name }}</p>
+            </div>
+            <div class="col-md-6 p-0 d-flex justify-content-end align-items-end">
+                <h6 class="mt-2 mx-3 text-align-center">Narahubung Properti</h6>
+            </div>
         </div>
-        <div class="row">
-                <div class="col-md-6 p-0 m-0 d-flex justify-content-start">
-                    <div class="col-md-4" style="margin-right:1rem">
-                        <p class="harga-detail">Rp. {{ number_format($alternative->C1, 0, ',', '.') }}</p>   
-                    </div>
-                    <div class="col-md-2" style="margin-right:1rem">
-                        <p class="lt-detail">LT. {{ $alternative->C16 }} m²</p>
-                    </div>
-                    <div class="col-md-2" style="margin-right:1rem">
-                        <p class="lb-detail">LB. {{ $alternative->C15 }} m²</p>
-                    </div>
+        <div class="row d-flex">
+            <div class="col-md-6 p-0 m-0 d-flex justify-content-start">
+                <div class="col-md-4" style="margin-right:1rem">
+                    <p class="harga-detail">Rp. {{ number_format($alternative->C1, 0, ',', '.') }}</p>   
                 </div>
-                <div class="col-md-6">
-                    <div class="container contact-prop">
-                        <div class="col-md-6 mx-3 my-1">
-                            <h6>Kontak Properti</h6>
-                        </div>
-                        <div class="col-md-6">
-                            <a href="https://wa.me/{{ $alternative->contact }}" target="_blank">
-                            <button class="btn contact">
-                                <i class="bi bi-whatsapp"></i>
-                                <span>{{ $alternative->contact }}</span>
-                            </button>
-                            </a>
-                        </div>
-                    </div>
+                <div class="col-md-2" style="margin-right:1rem">
+                    <p class="lt-detail">LT. {{ $alternative->C16 }} m²</p>
                 </div>
+                <div class="col-md-2" style="margin-right:1rem">
+                    <p class="lb-detail">LB. {{ $alternative->C15 }} m²</p>
+                </div>
+            </div>
+            <div class="col-md-6 d-flex justify-content-end">
+                <a href="https://wa.me/{{ $alternative->contact }}" target="_blank">
+                <button class="btn contact">
+                    <i class="bi bi-whatsapp"></i>
+                    <span>{{ $alternative->contact }}</span>
+                </button>
+                </a>
+            </div>
         </div>
         <br/>
         <div class="divider"></div>

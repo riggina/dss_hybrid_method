@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Alternative;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use \Cviebrock\EloquentSluggable\Services\SlugService;
 
 class AlternativeController extends Controller
@@ -142,6 +143,10 @@ class AlternativeController extends Controller
         $validatedData = $request->validate($rules);
         if($request->hasFile('img_url'))
         {
+            if ($request->oldImage) {
+                $oldImagePath = 'public/images/alternative/' . $request->oldImage;
+                Storage::delete($oldImagePath);
+            }
             $destination_path = 'public/images/alternative';
             $image = $request->file('img_url');
             $image_name = $image->getClientOriginalName();
