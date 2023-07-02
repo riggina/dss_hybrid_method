@@ -13,7 +13,7 @@
                 <p class="text-card">{{ $item->alternative_name}}</p>
                 <p class="text-card-price">Rp. {{ number_format($item->C1, 0, ',', '.') }}</p>
                 <p class="text-card-wide">LT. {{ $item->C16}} m²</p>
-                <p class="text-card-wide">LB. {{ $item->C17}} m²</p>
+                <p class="text-card-wide">LB. {{ $item->C15}} m²</p>
                 <a class="btn btn-more" href="alternative/{{$item->id}}" >Selengkapnya</a>
             </div>
         </div>

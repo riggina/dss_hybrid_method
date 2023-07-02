@@ -7,7 +7,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\ProfileController;
-use App\Http\Controllers\NormalizationController;
+use App\Http\Controllers\FilteringController;
 use App\Http\Controllers\DashboardController;
 
 
@@ -23,9 +23,9 @@ use App\Http\Controllers\DashboardController;
 |
 */
 Route::get('/', [HomeController::class, 'index']);
-Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
 
 Route::middleware('guest')->group(function () {
+    Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
     Route::post('login', [LoginController::class, 'authenticate'])->name('login.post');
 });
 
@@ -34,10 +34,8 @@ Route::post('register', [RegisterController::class, 'register'])->name('register
 Route::middleware('auth')->group(function () {
     Route::get('register', [RegisterController::class, 'showRegisterForm']);
     Route::get('profile', [ProfileController::class, 'profile']);
-    // Route::get('dashboard', [AlternativeController::class, 'index']);
     Route::post('logout', [LogoutController::class, 'logout']);
     Route::resource('/dashboard', AlternativeController::class);
-    // Route::put('/dashboard/{alternative}',[AlternativeController::class, 'update'])->name('alternative.update');
     Route::get('/dashboard/checkSlug', [AlternativeController::class, 'checkSlug'])->name('alternative_slug');
     Route::get('/peringkat', [DashboardController::class, 'calculate']);
 });
@@ -46,8 +44,8 @@ Route::middleware('auth')->group(function () {
 
 Route::get('/alternative', [HomeController::class, 'search']);
 Route::get('/alternative/{alternative}', [HomeController::class, 'show']);
-Route::post('/filter', [NormalizationController::class, 'filterByLuasBangunan'])->name('filterByLuasBangunan');
-Route::get('/dariperingkat', [NormalizationController::class, 'hybrid']);
+Route::post('/filter', [FilteringController::class, 'filterBy'])->name('filterBy');
+Route::get('/dariperingkat', [FilteringController::class, 'hybrid']);
 
 
 // Route::group(['middleware'=>'is_admin', 'prefix'=>'admin'], function (){

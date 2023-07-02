@@ -374,11 +374,12 @@ h6{
     border-radius: 8px;
 }
 
-/* .sidebar .bottom-content li:hover{
-    background-color: #FFA500;
-    border-radius: 8px;
-} */
-
+.sidebar li.active i{
+    color: #FFF;
+}
+.sidebar li.active span{
+    color: #FFF;
+}
 .add-data{
     display: flex;
     justify-content: center;
