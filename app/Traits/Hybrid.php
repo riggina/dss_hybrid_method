@@ -1,15 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Traits;
 
 use Illuminate\Http\Request;
-use Tymon\JWTAuth\Facades\JWTAuth;
 use App\Models\Alternative;
-use Illuminate\Pagination\Paginator;
 
-class DashboardController extends Controller
+trait Hybrid
 {
-    public function weighted()
+    private function weighted()
     {
         $alternatives = Alternative::all();
         $costs = ['C1', 'C2', 'C3', 'C4', 'C5', 'C6', 'C7', 'C8', 'C9', 'C10', 'C11', 'C12'];
@@ -169,7 +167,7 @@ class DashboardController extends Controller
         return $correlation;
     }
 
-    public function calculate() {
+    public function hybrid() {
 
         ///Tahapan COPRAS-ARAS
         $alternatives = Alternative::all();
@@ -365,20 +363,6 @@ class DashboardController extends Controller
             return $b['score'] - $a['score'];
         });
 
-        $ranking = 1;
-        foreach ($rankedAlternatives as &$alternative) {
-            $alternative['rank'] = $ranking;
-            $ranking++;
-        }
-        // Menentukan jumlah item per halaman
-        $perPage = 4;
-
-        // Membuat instance Paginator
-        $rankedAlternatives = new Paginator($rankedAlternatives, $perPage);
-
-        return view('pages.dashboard.ranking', [
-            'items' => $rankedAlternatives
-        ]); 
-
+        return $rankedAlternatives;
     }
 }

@@ -50,13 +50,13 @@ class Alternative extends Model
     
     protected $guarded = ['id', 'timestamps'];
 
-    public function scopeFilter($query, array $filters)
-    {
-        $query->when($filters['search'] ?? false, function($query, $search) {
-            return $query -> where('alternative_name', 'like', '%' . $search . '%')
-            ->orWhere('alamat', 'like', '%' . $search . '%');
-        }); 
-    }
+    // public function scopeFilter($query, array $filters)
+    // {
+    //     $query->when($filters['search'] ?? false, function($query, $search) {
+    //         return $query -> where('alternative_name', 'like', '%' . $search . '%')
+    //         ->orWhere('alamat', 'like', '%' . $search . '%');
+    //     }); 
+    // }
 
     public function user(): BelongsTo
     {

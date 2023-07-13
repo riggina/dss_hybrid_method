@@ -5,7 +5,11 @@
 <div class="container">
     <div class="row my-5">
         <div class="col-md-12 gambar-rumah">
-            <img src="{{ asset('/storage/images/alternative/'. $alternative->img_url) }}" class="gambar-rumah" alt="gambar rumah"/>
+            @if($alternative->img_url)
+                <img src="{{ asset('/storage/images/alternative/'. $alternative->img_url) }}" class="gambar-rumah" alt="Gambar">
+            @else
+                <img src="{{ asset('img/image.png') }}" class="gambar-rumah" alt="Gambar Default">
+            @endif
         </div>
     </div>
     <div class="row">
@@ -51,7 +55,6 @@
                             @elseif($alternative->C13 == 1)
                             GIRIK
                             @endif
-                            
                         </p>
                     </div>
                     <div class="col-md-6">
@@ -99,6 +102,34 @@
                             Tersedia
                             @else
                             Tidak Tersedia
+                            @endif
+                        </p>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>Status Kemiringan Tanah</h6>
+                    </div>
+                    <div class="col-md-6 text-detail">
+                        <p> 
+                            @if ($alternative->C12 >= 0 && $alternative->C12 <= 0.2)
+                                Tanah Datar
+                            @elseif ($alternative->C12 >= 0.2 && $alternative->C12 <= 0.5)
+                                Tanah Rata
+                            @elseif ($alternative->C12 >= 0.5 && $alternative->C12 <= 1)
+                                Tanah Rata dengan sedikit kemiringan
+                            @elseif ($alternative->C12 >= 1 && $alternative->C12 <= 2)
+                                Tanah Rata dengan kemiringan
+                            @elseif ($alternative->C12 >= 2 && $alternative->C12 <= 5)
+                                Tanah sedikit adanya Kemiringan
+                            @elseif ($alternative->C12 >= 5 && $alternative->C12 <= 10)
+                                Tanah dengan Kemiringan
+                            @elseif ($alternative->C12 >= 10 && $alternative->C12 <= 15)
+                                Tanah Kemiringan perbedaan tinggi yang cukup tajam
+                            @elseif ($alternative->C12 >= 15 && $alternative->C12 <= 30)
+                                Tanah Kemiringan yang sedang hingga Curam
+                            @elseif ($alternative->C12 >= 30 && $alternative->C12 <= 60)
+                                Tanah Kemiringan yang Curam
+                            @elseif ($alternative->C12 > 60)
+                                Tanah Kemiringan yang sangat Curam
                             @endif
                         </p>
                     </div>

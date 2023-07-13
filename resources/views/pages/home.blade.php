@@ -40,7 +40,7 @@
 @endsection
 
 @section('footer')
-  <p>&copy; 2023 Sistem Pendukung Keputusan Rekomendasi Rumah Tinggal Balikpapan. All rights reserved.</p>
+  <p>2023 Sistem Pendukung Keputusan Rekomendasi Rumah Tinggal Balikpapan.</p>
 @endsection
 
 @php
