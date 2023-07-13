@@ -8,7 +8,11 @@
                     Tidak Tersedia
                 @endif
             </span>
-            <img src="{{ asset('/storage/images/alternative/'. $item->img_url) }}" class="card-img-top img-cards" alt="...">
+            @if($item->img_url)
+                <img src="{{ asset('/storage/images/alternative/'. $item->img_url) }}" class="card-img-top img-cards" alt="Gambar">
+            @else
+                <img src="{{ asset('img/default.png') }}" class="card-img-top img-cards" alt="Gambar Default">
+            @endif
             <div class="card-body p-0 ">
                 <p class="text-card">{{ $item->alternative_name}}</p>
                 <p class="text-card-price">Rp. {{ number_format($item->C1, 0, ',', '.') }}</p>

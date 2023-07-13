@@ -4,12 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Alternative;
 use Illuminate\Http\Request;
+use App\Traits\Hybrid;
 
 class HomeController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    use Hybrid;
+
     public function index()
     {
         return view('pages.home', [
@@ -17,10 +17,30 @@ class HomeController extends Controller
         ]);
     }
 
-    public function search()
+    public function search(Request $request)
     {
+        $filters = $request->only('search');
+        $rankedAlternatives = $this->hybrid();
+
+        $result = collect($rankedAlternatives)->filter(function ($item) use ($filters) {
+            $search = $filters['search'] ?? false;
+            
+            return (stripos($item['alternative_name'], $search) !== false) || (stripos($item['alamat'], $search) !== false);
+        });
+
+        if ($result->isEmpty()) {
+            return view('pages.error', [
+                'message' => 'Tidak ada hasil pencarian yang sesuai.'
+            ]);
+        }
+
+        $result = $result->values()->map(function ($item, $index) {
+            $item['rank'] = $index + 1;
+            return $item;
+        });
+    
         return view('pages.result', [
-            "alternatives" => Alternative::latest()->filter(request(['search']))->get()
+            'alternatives' => $result
         ]);
     }
     /**

@@ -7,7 +7,8 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\ProfileController;
-use App\Http\Controllers\FilteringController;
+use App\Http\Controllers\ShowbyRankController;
+use App\Http\Controllers\FilterController;
 use App\Http\Controllers\DashboardController;
 
 
@@ -37,15 +38,15 @@ Route::middleware('auth')->group(function () {
     Route::post('logout', [LogoutController::class, 'logout']);
     Route::resource('/dashboard', AlternativeController::class);
     Route::get('/dashboard/checkSlug', [AlternativeController::class, 'checkSlug'])->name('alternative_slug');
-    Route::get('/peringkat', [DashboardController::class, 'calculate']);
+    Route::get('/peringkat', [ShowbyRankController::class, 'showbyrankdashboard']);
 });
 
 
 
 Route::get('/alternative', [HomeController::class, 'search']);
 Route::get('/alternative/{alternative}', [HomeController::class, 'show']);
-Route::post('/filter', [FilteringController::class, 'filterBy'])->name('filterBy');
-Route::get('/dariperingkat', [FilteringController::class, 'hybrid']);
+Route::post('/filter', [FilterController::class, 'filter'])->name('filter');
+Route::get('/dariperingkat', [ShowbyRankController::class, 'showbyrankhome']);
 
 
 // Route::group(['middleware'=>'is_admin', 'prefix'=>'admin'], function (){

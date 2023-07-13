@@ -13,6 +13,7 @@ class LoginController extends Controller
 {
     public function showLoginForm()
     {
+        session(['isLoggedIn' => false]);
         return view('pages.login');
     }
 

@@ -24,6 +24,7 @@
                     </span>
                     <img src="{{ asset('/storage/images/alternative/'. $item['img_url']) }}" class="card-img-top img-cards" alt="...">
                     <div class="card-body p-0 ">
+                        <span class="rank">Peringkat {{ $item['rank'] }}</span>
                         <p class="text-card">{{ $item['alternative_name'] }}</p>
                         <p class="text-card-price">Rp. {{ number_format($item['C1'], 0, ',', '.') }}</p>
                         <p class="text-card-wide">LT. {{ $item['C16']}} m²</p>
@@ -39,7 +40,7 @@
 @endsection
 
 @section('footer')
-  <p>&copy; 2023 Sistem Pendukung Keputusan Rekomendasi Rumah Tinggal Balikpapan. All rights reserved.</p>
+  <p>2023 Sistem Pendukung Keputusan Rekomendasi Rumah Tinggal Balikpapan.</p>
 @endsection
 
 @php

@@ -38,7 +38,7 @@
                                     </div>
                                     <div class="form-group col-md-9 post-foto">
                                         <p>Unggah gambar rumah. Ukuran max 2MB</p>
-                                        <input class="form-control form-control-sm" id="image" name="img_url" type="file" required>
+                                        <input class="form-control form-control-sm" id="image" name="img_url" type="file">
                                     </div>
                                 </div>
                                 <div class="form-group my-2">
@@ -150,9 +150,12 @@
                                     <label class="form-label title">Kemiringan Tanah</label>
                                     <input name="C12" class="form-control place-date" placeholder="m²" required> 
                                 </div>
-                                <div class="form-group my-2">
-                                    <label class="form-label title">Jumlah Ketersediaan Unit</label>
-                                    <input name="available_status" type="number" class="form-control place-date" placeholder="Jumlah Ketersediaan Unit" required> 
+                                <div class="mb-2">
+                                    <label class="form-label title">Ketersediaan Unit</label>
+                                    <select name="available_status" class="form-select" aria-label="Default select example" required>
+                                        <option value="1">Tersedia</option>
+                                        <option value="0">Tidak Tersedia</option>
+                                    </select>
                                 </div>
                                 <div class="form-group mb-2">
                                     <label class="form-label title">Koordinat Lokasi Unit</label>
