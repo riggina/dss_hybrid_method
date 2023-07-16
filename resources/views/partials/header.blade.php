@@ -190,6 +190,9 @@
   
       if (minVal > maxVal || maxVal < minVal) {
         alert('Nilai Max Harga harus lebih tinggi dari Min Harga');
+        var temp = minVal;
+        minSelect.value = maxVal;
+        maxSelect.value = temp;
       }
     }
   </script>

@@ -207,27 +207,25 @@
     </div>
 </div>
 <script>
+    
     document.addEventListener("DOMContentLoaded", function () {
-    var map = L.map('map').setView([-1.269160, 116.825264], 15); // Koordinat default (Balikpapan)
+    var map = L.map('map').setView([-1.269160, 116.825264], 13);
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors'
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
 
     var alternatives = @json($alternative);
-    console.log(typeof alternatives)
-
     Object.keys(alternatives).forEach(function (key) {
         var alternative = alternatives[key];
         var latitude = alternatives.latitude;
         var longitude = alternatives.longitude;
-        var marker = L.marker([latitude, longitude]).addTo(map);
-        marker.bindPopup(alternative.alternative_name); // Menambahkan informasi pada marker
-
-        marker.on('click', function () {
-            alert('Marker clicked: ' + alternative.alternative_name);
-        });
-    });
+        var name = alternatives.alternative_name;
+        L.marker([latitude, longitude])
+            .bindPopup(alternatives.alternative_name)
+            .addTo(map)
+            .openPopup();
+    })
 })
 </script>
 @endsection

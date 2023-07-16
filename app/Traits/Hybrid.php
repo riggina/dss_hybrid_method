@@ -78,20 +78,20 @@ trait Hybrid
         }
 
         /// Koefisien Pengaruh Bobot
-            //Menjumlahkan hasil dari index koefisien korelasi secara horizontal
-            $sum = array_map(function($num) {
-                return array_sum($num);
-            }, $correlationMatrix);
-            //Operasi perkalian dengan standar deviasi
-            $Cj = [];
-            if(count($stdDev) === count($sum)) {
-                $length = count($stdDev);
-                for($i = 0; $i < $length; $i++) {
-                    $Cj[] = $stdDev[$i] * $sum[$i];
-                }
-            }else {
-                echo "Panjang array tidak sama";
+        //Menjumlahkan hasil dari index koefisien korelasi secara horizontal
+        $sum = array_map(function($num) {
+            return array_sum($num);
+        }, $correlationMatrix);
+        //Operasi perkalian dengan standar deviasi
+        $Cj = [];
+        if(count($stdDev) === count($sum)) {
+            $length = count($stdDev);
+            for($i = 0; $i < $length; $i++) {
+                $Cj[] = $stdDev[$i] * $sum[$i];
             }
+        }else {
+            echo "Panjang array tidak sama";
+        }
         ///
 
         /// Menghitung bobotnya
@@ -102,6 +102,7 @@ trait Hybrid
         }
 
         return $W;
+        ///
 
     }
    
